@@ -21,17 +21,26 @@ function addMenu() {
         a = document.createElement('a');
         a.innerText = 'Login';
         d.appendChild(a);
+        a = document.createElement('a');
+        a.innerText = 'Sign Up';
+        d.appendChild(a);
     } else {
         a = document.createElement('a');
         a.innerText = 'User :)';
+        a.setAttribute('onclick', 'addUserBlock()');
+
+        a.setAttribute("class", "user button");
         d.appendChild(a);
     }
+    main.appendChild(d);
+    d = document.createElement('div');
+    d.setAttribute("id", "container");
     main.appendChild(d);
 }
 
 function getCookie(name) {
-    let matches = document.cookie.match(new RegExp(
-        "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
-    ));
-    return matches ? decodeURIComponent(matches[1]) : undefined;
+    if (document.cookie.split(';').filter((item) => item.trim().startsWith(name)).length) {
+        return 'User';
+    }
+    return undefined;
 }
