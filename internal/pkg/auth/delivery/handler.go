@@ -1,14 +1,14 @@
 package delivery
 
 import (
+	"RSOI_CW/internal/models"
+	"RSOI_CW/internal/pkg/auth"
+	"RSOI_CW/internal/pkg/middleware"
 	"fmt"
 	"github.com/dgrijalva/jwt-go"
 	"github.com/mailru/easyjson"
 	"net/http"
 	"os"
-	"rsoi-kp-k-t-l-h/internal/models"
-	"rsoi-kp-k-t-l-h/internal/pkg/auth"
-	"rsoi-kp-k-t-l-h/internal/pkg/middleware"
 	"time"
 )
 
@@ -37,6 +37,12 @@ func (h *AuthHandler) GetAllUsers(w http.ResponseWriter, r *http.Request) {
 }
 
 func (h *AuthHandler) GetToken(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Access-Control-Allow-Headers", "*")
+	if r.Method == http.MethodOptions {
+		return
+	}
+
 	login, password, err := r.BasicAuth()
 	if !err {
 		middleware.Response(w, models.StatusNoAuth, nil)

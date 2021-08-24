@@ -5,12 +5,12 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"github.com/jackc/pgx/pgxpool"
+	"github.com/jackc/pgx/v4/pgxpool"
 	"github.com/joho/godotenv"
 	"log"
 	"os"
-	"rsoi-kp-k-t-l-h/internal/models"
-	"rsoi-kp-k-t-l-h/internal/pkg/report/repo"
+	"RSOI_CW/internal/models"
+	"RSOI_CW/internal/pkg/report/repo"
 
 	"github.com/streadway/amqp"
 )

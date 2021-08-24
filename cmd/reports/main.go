@@ -5,14 +5,14 @@ import (
 	"errors"
 	"fmt"
 	"github.com/gorilla/mux"
-	"github.com/jackc/pgx/pgxpool"
+	"github.com/jackc/pgx/v4/pgxpool"
 	"github.com/joho/godotenv"
 	"github.com/rs/cors"
 	"log"
 	"net/http"
 	"os"
-	"rsoi-kp-k-t-l-h/internal/pkg/report/delivery"
-	"rsoi-kp-k-t-l-h/internal/pkg/report/repo"
+	"RSOI_CW/internal/pkg/report/delivery"
+	"RSOI_CW/internal/pkg/report/repo"
 	"strings"
 )
 

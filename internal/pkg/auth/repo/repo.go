@@ -1,11 +1,11 @@
 package repo
 
 import (
+	"RSOI_CW/internal/models"
 	"context"
 	"github.com/google/uuid"
-	"github.com/jackc/pgx/pgxpool"
+	"github.com/jackc/pgx/v4/pgxpool"
 	"log"
-	"rsoi-kp-k-t-l-h/internal/models"
 )
 
 type AuthRepo struct {

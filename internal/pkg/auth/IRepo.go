@@ -1,6 +1,6 @@
 package auth
 
-import "rsoi-kp-k-t-l-h/internal/models"
+import "RSOI_CW/internal/models"
 
 type IRepo interface {
 	GetUser(login string, password string) (models.User, int)

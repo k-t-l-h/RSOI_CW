@@ -1,7 +1,6 @@
 window.onload = addMenu;
 
 const buttons = ["a", "b", "c", "d", "e"];
-document.cookie = "username=John; path=/; expires=Tue, 19 Jan 2038 03:14:07 GMT"
 function addMenu() {
     main = document.getElementById('main')
     main.innerHTML = '';
@@ -20,15 +19,18 @@ function addMenu() {
     if (auth === undefined) {
         a = document.createElement('a');
         a.innerText = 'Login';
+        a.setAttribute('id', 'login');
+        a.setAttribute('onclick', 'addLoginBlock()');
         d.appendChild(a);
         a = document.createElement('a');
         a.innerText = 'Sign Up';
+        a.setAttribute('id', 'signup');
+        a.setAttribute('onclick', 'addSignUpBlock()');
         d.appendChild(a);
     } else {
         a = document.createElement('a');
         a.innerText = 'User :)';
         a.setAttribute('onclick', 'addUserBlock()');
-
         a.setAttribute("class", "user button");
         d.appendChild(a);
     }
@@ -44,3 +46,5 @@ function getCookie(name) {
     }
     return undefined;
 }
+
+

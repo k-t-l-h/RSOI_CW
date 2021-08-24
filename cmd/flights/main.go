@@ -1,18 +1,18 @@
 package main
 
 import (
+	"RSOI_CW/internal/pkg/flights/delivery"
+	"RSOI_CW/internal/pkg/flights/repo"
 	"context"
 	"errors"
 	"fmt"
 	"github.com/gorilla/mux"
-	"github.com/jackc/pgx/pgxpool"
+	"github.com/jackc/pgx/v4/pgxpool"
 	"github.com/joho/godotenv"
 	"github.com/rs/cors"
 	"log"
 	"net/http"
 	"os"
-	"rsoi-kp-k-t-l-h/internal/pkg/flights/delivery"
-	"rsoi-kp-k-t-l-h/internal/pkg/flights/repo"
 	"strings"
 )
 

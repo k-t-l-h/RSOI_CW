@@ -1,11 +1,11 @@
 package repo
 
 import (
+	"RSOI_CW/internal/models"
 	"context"
 	"github.com/google/uuid"
 	_ "github.com/jackc/pgconn"
-	"github.com/jackc/pgx/pgxpool"
-	"rsoi-kp-k-t-l-h/internal/models"
+	"github.com/jackc/pgx/v4/pgxpool"
 )
 
 type FlightRepo struct {

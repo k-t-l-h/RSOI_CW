@@ -6,14 +6,14 @@ import (
 	"github.com/gorilla/mux"
 	"github.com/joho/godotenv"
 	"github.com/streadway/amqp"
-	"rsoi-kp-k-t-l-h/internal/pkg/middleware"
+	"RSOI_CW/internal/pkg/middleware"
 	"strings"
 
 	"github.com/rs/cors"
 	"log"
 	"net/http"
 	"os"
-	"rsoi-kp-k-t-l-h/internal/pkg/gateway/delivery"
+	"RSOI_CW/internal/pkg/gateway/delivery"
 )
 
 func init() {

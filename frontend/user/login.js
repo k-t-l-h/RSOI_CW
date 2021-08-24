@@ -1,21 +1,29 @@
-alert(document.cookie);
-
 async function login() {
    let user = document.getElementById("username").value;
    let user_pass = document.getElementById("password").value;
-   const url = 'http://127.0.0.1:8000/login';
-   const data = {login: user, password: user_pass};
+   const url = 'http://127.0.0.1:8010/api/v1/auth';
 
+   let auth = user +':' + user_pass;
    let response = await fetch(url, {
       method: 'POST',
       credentials: 'same-origin',
       headers: {
-         'Content-Type': 'application/json',
+         'Authorization': `Basic ${(btoa(auth))}`,
+         'Access-Control-Allow-Origin': '*'
       },
-      body: JSON.stringify(data)
    });
    if (response.ok) {
-        let user = await response.json();
+      document.cookie = "username=${user}; path=/; expires=Tue, 19 Jan 2038 03:14:07 GMT"
+      b1 = document.getElementById('login');
+      b1.parentNode.removeChild(b1);
+      b2 = document.getElementById('container');
+      b2.parentNode.removeChild(b2);
+
+      d = document.getElementById('navbar');
+      a.innerText = 'User :)';
+      a.setAttribute('onclick', 'addUserBlock()');
+      a.setAttribute("class", "user button");
+      d.appendChild(a);
 
       } else {
         console.log("Ошибка HTTP: " + response.status);
@@ -53,4 +61,12 @@ async function signup() {
          console.log("Ошибка HTTP: " + response.status);
       }
    }
+}
+
+function utf8_to_b64(str) {
+   return window.btoa(unescape(encodeURIComponent(str)));
+}
+
+function b64_to_utf8(str) {
+   return decodeURIComponent(escape(window.atob(str)));
 }

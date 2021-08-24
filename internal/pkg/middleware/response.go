@@ -1,10 +1,10 @@
 package middleware
 
 import (
+	"RSOI_CW/internal/models"
 	"encoding/json"
 	"github.com/google/uuid"
 	"net/http"
-	"rsoi-kp-k-t-l-h/internal/models"
 )
 
 var DefaultError = models.Error{

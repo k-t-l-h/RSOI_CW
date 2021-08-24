@@ -1,9 +1,9 @@
 package repo
 
 import (
+	"RSOI_CW/internal/models"
 	"context"
-	"github.com/jackc/pgx/pgxpool"
-	"rsoi-kp-k-t-l-h/internal/models"
+	"github.com/jackc/pgx/v4/pgxpool"
 )
 
 type ReportRepo struct {

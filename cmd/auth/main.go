@@ -1,19 +1,17 @@
 package main
 
 import (
+	"RSOI_CW/internal/pkg/auth/delivery"
+	"RSOI_CW/internal/pkg/auth/repo"
 	"context"
 	"errors"
 	"fmt"
 	"github.com/gorilla/mux"
-	"github.com/jackc/pgx/pgxpool"
+	"github.com/jackc/pgx/v4/pgxpool"
 	"github.com/joho/godotenv"
-	"github.com/rs/cors"
 	"log"
 	"net/http"
 	"os"
-	"rsoi-kp-k-t-l-h/internal/pkg/auth/delivery"
-	"rsoi-kp-k-t-l-h/internal/pkg/auth/repo"
-	"strings"
 )
 
 func init() {
@@ -56,7 +54,7 @@ func run() error {
 	//header: Authorization: basic(<login>:<password>)
 	//POST /auth -> JWT token
 	r.HandleFunc("/api/v1/auth",
-		handler.GetToken).Methods("POST")
+		handler.GetToken).Methods("POST", "OPTIONS")
 
 	//Проверка токена пользователя.
 	//header: Authorization: bearer <jwt>
@@ -77,13 +75,14 @@ func run() error {
 	r.HandleFunc("/api/v1/users",
 		handler.AddUser).Methods("POST")
 
-	c := cors.New(cors.Options{
+	/*c := cors.New(cors.Options{
 		AllowedOrigins:   strings.Split(os.Getenv("AUTH_ORIGINS"), " "),
 		AllowCredentials: true,
 	})
+	 */
 
-	corsHandler := c.Handler(r)
-	srv := http.Server{Handler: corsHandler, Addr: fmt.Sprintf(":%s", port)}
+	//corsHandler := c.Handler(r)
+	srv := http.Server{Handler: r, Addr: fmt.Sprintf(":%s", port)}
 	http.Handle("/", r)
 
 	log.Print("auth running on ", srv.Addr)
