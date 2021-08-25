@@ -42,7 +42,7 @@ async function signup() {
       document.getElementById("password").reportValidity();
       console.log(document.getElementById("password").validity);
    } else {
-      const url = 'http://127.0.0.1:8000/signup';
+      const url = 'http://127.0.0.1:8010/api/v1/auth';
       const data = {login: user, password: user_pass};
 
       let response = await fetch(url, {

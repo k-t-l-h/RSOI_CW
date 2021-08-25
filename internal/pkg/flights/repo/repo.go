@@ -6,6 +6,7 @@ import (
 	"github.com/google/uuid"
 	_ "github.com/jackc/pgconn"
 	"github.com/jackc/pgx/v4/pgxpool"
+	"log"
 )
 
 type FlightRepo struct {
@@ -49,7 +50,7 @@ func (r *FlightRepo) ReadFlight(FlightUUID uuid.UUID) (models.Flight, int) {
 
 func (r *FlightRepo) ReadFlights() ([]models.Flight, int) {
 
-	SelectAll := "SELECT \"From\", \"To\", \"Date\"  FROM public.flight;"
+	SelectAll := "SELECT \"From\", \"From_city\", \"To\", \"To_city\", \"Date\", \"FlightID\"\n\tFROM public.flight;"
 
 	row, err := r.pool.Query(context.Background(), SelectAll)
 	if err != nil {
@@ -60,13 +61,14 @@ func (r *FlightRepo) ReadFlights() ([]models.Flight, int) {
 	for row.Next() {
 		flight := models.Flight{}
 
-		if err := row.Scan(&flight.From, &flight.To, &flight.Date); err != nil {
+		if err := row.Scan(&flight.From, &flight.FromCity, &flight.To, &flight.ToCity, &flight.Date, &flight.ID); err != nil {
+			log.Print(err)
 			return nil, models.StatusError
 		}
 		result = append(result, flight)
 	}
 
-	return []models.Flight{}, models.StatusOkey
+	return result, models.StatusOkey
 }
 
 func (r *FlightRepo) UpdateFlight(FlightUUID uuid.UUID, flight models.Flight) int {

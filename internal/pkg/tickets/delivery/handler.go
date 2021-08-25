@@ -1,13 +1,13 @@
 package delivery
 
 import (
+	"RSOI_CW/internal/models"
+	"RSOI_CW/internal/pkg/middleware"
+	"RSOI_CW/internal/pkg/tickets"
 	"github.com/google/uuid"
 	"github.com/gorilla/mux"
 	"github.com/mailru/easyjson"
 	"net/http"
-	"rsoi-kp-k-t-l-h/internal/models"
-	"rsoi-kp-k-t-l-h/internal/pkg/middleware"
-	"rsoi-kp-k-t-l-h/internal/pkg/tickets"
 )
 
 type TicketHandler struct {
@@ -17,7 +17,6 @@ type TicketHandler struct {
 func NewTicketHandler(repo tickets.IRepo) *TicketHandler {
 	return &TicketHandler{repo: repo}
 }
-
 
 //header: Authorization: bearer <jwt>
 //GET /tickets
@@ -57,7 +56,6 @@ func (h *TicketHandler) ReturnTicket(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-
 //GET /tickets/{ticketUid}
 func (h *TicketHandler) TicketInfo(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
@@ -69,4 +67,15 @@ func (h *TicketHandler) TicketInfo(w http.ResponseWriter, r *http.Request) {
 		ticket, status := h.repo.GetTicket(id)
 		middleware.Response(w, status, ticket)
 	}
+}
+
+//GET /tickets
+func (h *TicketHandler) AllTicketInfo(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Access-Control-Allow-Headers", "*")
+	if r.Method == http.MethodOptions {
+		return
+	}
+	ticket, status := h.repo.GetAllTickets()
+	middleware.Response(w, status, ticket)
 }

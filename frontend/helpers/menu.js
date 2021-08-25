@@ -1,6 +1,7 @@
 window.onload = addMenu;
 
-const buttons = ["a", "b", "c", "d", "e"];
+const buttons = ["Рейсы", "Аэропорты", "c", "d", "e"];
+const functions = ["ShowAllFlights()", "ShowAirports()", "c", "d", "e"];
 function addMenu() {
     main = document.getElementById('main')
     main.innerHTML = '';
@@ -10,7 +11,7 @@ function addMenu() {
 
     for (let i = 0; i < buttons.length; i++) {
         a = document.createElement('a');
-        a.setAttribute("href", buttons[i]);
+        a.setAttribute("onclick", functions[i]);
         a.innerText = buttons[i];
         d.appendChild(a);
     }
@@ -47,4 +48,6 @@ function getCookie(name) {
     return undefined;
 }
 
-
+function navigate(path) {
+    window.history.pushState({}, path, window.location+path);
+}

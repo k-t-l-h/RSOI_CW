@@ -1,5 +1,6 @@
 
 function addUserBlock() {
+    navigate('/user');
     main = document.getElementById('container')
     main.innerHTML = '';
 

@@ -37,6 +37,28 @@ func (r *TicketRepo) GetTickets(uuid uuid.UUID) ([]models.Ticket, int) {
 	return result, models.StatusOkey
 }
 
+func (r *TicketRepo) GetAllTickets() ([]models.Ticket, int) {
+	SelectMy := "SELECT \"TicketUUID\", \"FlightUUID\", \"UserUUID\" " +
+		"FROM public.ticket;"
+
+	rows, err := r.pool.Query(context.Background(), SelectMy)
+	if err != nil {
+		return nil, models.StatusError
+	}
+
+	result := []models.Ticket{}
+	for rows.Next() {
+		ticket := models.Ticket{}
+		err = rows.Scan(&ticket.TicketUUID, &ticket.FlightUUID, &ticket.UserUUID)
+		if err != nil {
+			return nil, models.StatusError
+		}
+		result = append(result, ticket)
+	}
+
+	return result, models.StatusOkey
+}
+
 func (r *TicketRepo) GetTicket(uuid uuid.UUID) (models.Ticket, int) {
 	SelectMy := "SELECT \"TicketUUID\", \"FlightUUID\", \"UserUUID\" " +
 		"FROM public.ticket WHERE \"TicketUUID\" = $1;"

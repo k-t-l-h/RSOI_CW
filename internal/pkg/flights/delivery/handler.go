@@ -1,13 +1,13 @@
 package delivery
 
 import (
+	"RSOI_CW/internal/models"
+	"RSOI_CW/internal/pkg/flights"
+	"RSOI_CW/internal/pkg/middleware"
 	"github.com/google/uuid"
 	"github.com/gorilla/mux"
 	"github.com/mailru/easyjson"
 	"net/http"
-	"rsoi-kp-k-t-l-h/internal/models"
-	"rsoi-kp-k-t-l-h/internal/pkg/flights"
-	"rsoi-kp-k-t-l-h/internal/pkg/middleware"
 )
 
 type FlightHandler struct {
@@ -21,6 +21,11 @@ func NewFlightHandler(repo flights.IRepo) *FlightHandler {
 //список всех рейсов
 //GET /flights
 func (h *FlightHandler) AllFlights(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Access-Control-Allow-Headers", "*")
+	if r.Method == http.MethodOptions {
+		return
+	}
 	readFlights, status := h.repo.ReadFlights()
 	middleware.Response(w, status, readFlights)
 }
