@@ -4,9 +4,10 @@ let cors = require('cors');
 let app = express();
 const port = 3000;
 
-
-app.use(cors());
+app.get('/*', (req, res) => {
+    res.sendFile('./main/main.html');
+})
 
 app.listen(port, () => {
-    console.log(`Fish app listening at http://localhost:${port}`)
+    console.log(`App listening at http://localhost:${port}`)
 })

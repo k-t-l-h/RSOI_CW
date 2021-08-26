@@ -1,7 +1,7 @@
 window.onload = addMenu;
 
 const buttons = ["Рейсы", "Аэропорты", "c", "d", "e"];
-const functions = ["ShowAllFlights()", "ShowAirports()", "c", "d", "e"];
+const functions = ["ShowAllFlights()", "ShowAllAirports()", "c", "d", "e"];
 function addMenu() {
     main = document.getElementById('main')
     main.innerHTML = '';

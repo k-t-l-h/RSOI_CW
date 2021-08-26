@@ -3,9 +3,9 @@ let airports = { all: [
         {id: 1, name: "a", city: "b"}]
 }
 
-window.onload = ShowAirports;
+window.onload = ShowAllAirports;
 
-function ShowAirports() {
+function ShowAllAirports() {
     main = document.getElementById('container')
     main.innerHTML = '';
 
