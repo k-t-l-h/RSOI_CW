@@ -1,8 +1,8 @@
 package airport
 
 import (
+	"RSOI_CW/internal/models"
 	"github.com/google/uuid"
-	"rsoi-kp-k-t-l-h/internal/models"
 )
 
 type IRepo interface {

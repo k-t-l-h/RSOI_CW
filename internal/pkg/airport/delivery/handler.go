@@ -1,12 +1,12 @@
 package delivery
 
 import (
+	"RSOI_CW/internal/models"
+	"RSOI_CW/internal/pkg/airport"
+	"RSOI_CW/internal/pkg/middleware"
 	"github.com/google/uuid"
 	"github.com/gorilla/mux"
 	"net/http"
-	"rsoi-kp-k-t-l-h/internal/models"
-	"rsoi-kp-k-t-l-h/internal/pkg/airport"
-	"rsoi-kp-k-t-l-h/internal/pkg/middleware"
 )
 
 type AirportHandler struct {
@@ -19,6 +19,12 @@ func NewAirportHandler(repo airport.IRepo) *AirportHandler {
 
 //GET /airports/{airportUid}
 func (h *AirportHandler) GetAirport(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Access-Control-Allow-Headers", "*")
+	if r.Method == http.MethodOptions {
+		return
+	}
+
 	vars := mux.Vars(r)
 	uuids, _ := vars["UUID"]
 	id, err := uuid.Parse(uuids)
@@ -33,6 +39,12 @@ func (h *AirportHandler) GetAirport(w http.ResponseWriter, r *http.Request) {
 
 //GET /airports
 func (h *AirportHandler) GetAirports(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Access-Control-Allow-Headers", "*")
+	if r.Method == http.MethodOptions {
+		return
+	}
+
 	selectAirports, state := h.repo.SelectAirports()
 	middleware.Response(w, state, selectAirports)
 }

@@ -51,3 +51,4 @@ function getCookie(name) {
 function navigate(path) {
     window.history.pushState({}, path, window.location+path);
 }
+

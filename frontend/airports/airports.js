@@ -1,78 +1,77 @@
-let airports = { all: [
-    {id: 1, name: "a", city: "b"},
-        {id: 1, name: "a", city: "b"}]
-}
+async function ShowAllAirports() {
 
-window.onload = ShowAllAirports;
+    navigate('/airports');
+    const url = 'http://127.0.0.1:8020/api/v1/airports';
 
-function ShowAllAirports() {
-    main = document.getElementById('container')
-    main.innerHTML = '';
+    let response = await fetch(url, {
+        method: 'GET',
+        credentials: 'same-origin',
+        headers: {
+            'Access-Control-Allow-Origin': '*'
+        },
+    });
 
-    for (let i = 0; i < airports.all.length; i++) {
-        d = document.createElement('div');
-        d.setAttribute("id", airports.all[i].id);
-        d.setAttribute("class", "ticket-item");
+    if (response.ok) {
+        main = document.getElementById('container')
+        main.innerHTML = '';
 
-        link = document.createElement('button');
-        link.innerText = airports.all[i].id;
-        link.setAttribute('onclick', 'ShowAirport('+d.id+')');
-        //link.addEventListener('onclick', ShowAirport.bind(airports.all[i].id), false);
-        namef = document.createElement('p');
-        namef.innerText = airports.all[i].name;
-        city = document.createElement('p');
-        city.innerText = airports.all[i].city;
+        let airports = await response.json();
+        for (let i = 0; i < airports.length; i++) {
+            d = document.createElement('div');
+            d.setAttribute("id", airports[i].id);
+            d.setAttribute("class", "ticket-item");
 
-        d.appendChild(link);
-        d.appendChild(namef);
-        d.appendChild(city);
-        main.appendChild(d);
+            link = document.createElement('a');
+            link.innerText = airports[i].id;
+            link.setAttribute('onclick', 'ShowAirport("'+airports[i].id.toString()+'")');
+            namef = document.createElement('p');
+            namef.innerText = airports[i].name;
+
+            d.appendChild(link);
+            d.appendChild(namef);
+            main.appendChild(d);
+        }
     }
 
 
 }
 
 async function ShowAirport(id) {
-    console.log("Show");
-    main = document.getElementById('container')
-    main.innerHTML = '';
 
-    url = "http:/localhost/airports/" + id;
+    navigate('/airports');
+    const url = 'http://127.0.0.1:8020/api/v1/airports/' + id;
+
     let response = await fetch(url, {
         method: 'GET',
         credentials: 'same-origin',
         headers: {
-            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin': '*'
         },
     });
 
     if (response.ok) {
-        let airport = await response.json();
+        main = document.getElementById('container')
+        main.innerHTML = '';
 
-        d = document.createElement('div');
-        d.setAttribute("id", airport.id);
-        d.setAttribute("class", "ticket-item");
+        let airports = await response.json();
+            d = document.createElement('div');
+            d.setAttribute("id", airports.id);
+            d.setAttribute("class", "ticket-item");
 
-        link = document.createElement('a');
-        link.innerText = airport.id;
-        link.href = airport.id;
-        namef = document.createElement('p');
-        namef.innerText = airport.name;
-        city = document.createElement('p');
-        city.innerText = airport.city;
+            link = document.createElement('a');
+            link.innerText = airports.id;
+            namef = document.createElement('p');
+            namef.innerText = airports.name;
+            city = document.createElement('p');
+            city.innerText = airports.city;
+            description = document.createElement('p');
+            description.innerText = airports.description;
 
-        d.appendChild(link);
-        d.appendChild(namef);
-        d.appendChild(city);
-        main.appendChild(d);
-
-    } else {
-        d = document.createElement('div');
-        sorry = document.createElement('p');
-        sorry.innerText = 'Аэропорт не найден';
-        d.appendChild(sorry);
-        main.appendChild(d);
-        console.log("Ошибка HTTP: " + response.status);
+            d.appendChild(link);
+            d.appendChild(namef);
+            d.appendChild(city);
+            d.appendChild(description);
+            main.appendChild(d);
     }
 
 }
