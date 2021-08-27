@@ -9,11 +9,9 @@ import (
 	"github.com/gorilla/mux"
 	"github.com/jackc/pgx/v4/pgxpool"
 	"github.com/joho/godotenv"
-	"github.com/rs/cors"
 	"log"
 	"net/http"
 	"os"
-	"strings"
 )
 
 func init() {
@@ -54,18 +52,13 @@ func run() error {
 
 	//GET /airports/{airportUid}
 	r.HandleFunc("/api/v1/airports/{UUID}",
-		handler.GetAirport).Methods("GET")
+		handler.GetAirport).Methods(http.MethodGet, http.MethodOptions)
 	//GET /airports
 	r.HandleFunc("/api/v1/airports",
-		handler.GetAirports).Methods("GET")
+		handler.GetAirports).Methods(http.MethodGet, http.MethodOptions)
 
-	c := cors.New(cors.Options{
-		AllowedOrigins:   strings.Split(os.Getenv("AIRPORTS_ORIGINS"), " "),
-		AllowCredentials: true,
-	})
 
-	corsHandler := c.Handler(r)
-	srv := http.Server{Handler: corsHandler, Addr: fmt.Sprintf(":%s", port)}
+	srv := http.Server{Handler: r, Addr: fmt.Sprintf(":%s", port)}
 	http.Handle("/", r)
 
 	log.Print("airport running on: ", srv.Addr)
