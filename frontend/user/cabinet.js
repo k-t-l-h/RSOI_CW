@@ -5,9 +5,17 @@ function addUserBlock() {
     main.innerHTML = '';
 
     d = document.createElement('div');
-    d.setAttribute("class", "ticket-item");
+    d.setAttribute("class", "user-item");
+    a = document.createElement('p');
+    a.innerText = 'User';
+    d.appendChild(a);
 
-    d.innerText = 'User';
+    a = document.createElement('div');
+    a.innerText = 'Билеты';
+    a.setAttribute('onclick', 'GetMyTickets("b1b0b38c43f24cce8ccff4b1e343903c")')
+    a.setAttribute("class", "btn");
+    d.appendChild(a);
+
     main.appendChild(d);
 }
 

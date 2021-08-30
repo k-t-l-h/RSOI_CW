@@ -49,6 +49,13 @@ function getCookie(name) {
 }
 
 function navigate(path) {
-    window.history.pushState({}, path, window.location+path);
+    window.history.pushState({}, path, path);
 }
 
+
+
+/*window.onload = function () {
+    console.log("Here");
+    console.log(window.location);
+}
+ */

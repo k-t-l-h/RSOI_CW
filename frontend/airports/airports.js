@@ -19,7 +19,7 @@ async function ShowAllAirports() {
         for (let i = 0; i < airports.length; i++) {
             d = document.createElement('div');
             d.setAttribute("id", airports[i].id);
-            d.setAttribute("class", "ticket-item");
+            d.setAttribute("class", "airport-items");
 
             link = document.createElement('a');
             link.innerText = airports[i].id;
@@ -56,7 +56,7 @@ async function ShowAirport(id) {
         let airports = await response.json();
             d = document.createElement('div');
             d.setAttribute("id", airports.id);
-            d.setAttribute("class", "ticket-item");
+            d.setAttribute("class", "airport-item");
 
             link = document.createElement('a');
             link.innerText = airports.id;

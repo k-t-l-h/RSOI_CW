@@ -9,11 +9,9 @@ import (
 	"github.com/gorilla/mux"
 	"github.com/jackc/pgx/v4/pgxpool"
 	"github.com/joho/godotenv"
-	"github.com/rs/cors"
 	"log"
 	"net/http"
 	"os"
-	"strings"
 )
 
 func init() {
@@ -52,17 +50,11 @@ func run() error {
 
 	r := mux.NewRouter()
 
-	r.HandleFunc("/api/v1/flights", handler.AllFlights).Methods("GET")
-	r.HandleFunc("/api/v1/flights", handler.AddFlight).Methods("POST")
-	r.HandleFunc("/api/v1/flights/{UUID}", handler.UpdateFlight).Methods("PATCH")
+	r.HandleFunc("/api/v1/flights", handler.AllFlights).Methods(http.MethodGet, http.MethodOptions)
+	r.HandleFunc("/api/v1/flights", handler.AddFlight).Methods(http.MethodPost, http.MethodOptions)
+	r.HandleFunc("/api/v1/flights/{UUID}", handler.UpdateFlight).Methods(http.MethodPatch, http.MethodOptions)
 
-	c := cors.New(cors.Options{
-		AllowedOrigins:   strings.Split(os.Getenv("FLIGHTS_ORIGINS"), " "),
-		AllowCredentials: true,
-	})
-
-	corsHandler := c.Handler(r)
-	srv := http.Server{Handler: corsHandler, Addr: fmt.Sprintf(":%s", port)}
+	srv := http.Server{Handler: r, Addr: fmt.Sprintf(":%s", port)}
 	http.Handle("/", r)
 
 	log.Print("flights running on: ", srv.Addr)

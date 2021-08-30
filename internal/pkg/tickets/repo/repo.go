@@ -5,6 +5,7 @@ import (
 	"context"
 	"github.com/google/uuid"
 	"github.com/jackc/pgx/v4/pgxpool"
+	"log"
 )
 
 type TicketRepo struct {
@@ -16,9 +17,10 @@ func NewTicketRepo(pool pgxpool.Pool) *TicketRepo {
 }
 
 func (r *TicketRepo) GetTickets(uuid uuid.UUID) ([]models.Ticket, int) {
-	SelectMy := "SELECT \"TicketUUID\", \"FlightUUID\", \"UserUUID\" " +
+	SelectMy := "SELECT \"TicketUUID\", \"FlightUUID\", \"UserUUID\",  \"Date\" date " +
 		"FROM public.ticket WHERE \"UserUUID\" = $1;"
 
+	log.Print(uuid)
 	rows, err := r.pool.Query(context.Background(), SelectMy, uuid)
 	if err != nil {
 		return nil, models.StatusError
@@ -27,7 +29,7 @@ func (r *TicketRepo) GetTickets(uuid uuid.UUID) ([]models.Ticket, int) {
 	result := []models.Ticket{}
 	for rows.Next() {
 		ticket := models.Ticket{}
-		err = rows.Scan(&ticket.TicketUUID, &ticket.FlightUUID, &ticket.UserUUID)
+		err = rows.Scan(&ticket.TicketUUID, &ticket.FlightUUID, &ticket.UserUUID, &ticket.Date)
 		if err != nil {
 			return nil, models.StatusError
 		}

@@ -17,7 +17,7 @@ var (
 	_ easyjson.Marshaler
 )
 
-func easyjsonB39c1f48DecodeRsoiKpKTLHInternalModels(in *jlexer.Lexer, out *Ticket) {
+func easyjsonB39c1f48DecodeRSOICWInternalModels(in *jlexer.Lexer, out *Ticket) {
 	isTopLevel := in.IsStart()
 	if in.IsNull() {
 		if isTopLevel {
@@ -48,6 +48,10 @@ func easyjsonB39c1f48DecodeRsoiKpKTLHInternalModels(in *jlexer.Lexer, out *Ticke
 			if data := in.UnsafeBytes(); in.Ok() {
 				in.AddError((out.UserUUID).UnmarshalText(data))
 			}
+		case "date":
+			if data := in.Raw(); in.Ok() {
+				in.AddError((out.Date).UnmarshalJSON(data))
+			}
 		default:
 			in.SkipRecursive()
 		}
@@ -58,7 +62,7 @@ func easyjsonB39c1f48DecodeRsoiKpKTLHInternalModels(in *jlexer.Lexer, out *Ticke
 		in.Consumed()
 	}
 }
-func easyjsonB39c1f48EncodeRsoiKpKTLHInternalModels(out *jwriter.Writer, in Ticket) {
+func easyjsonB39c1f48EncodeRSOICWInternalModels(out *jwriter.Writer, in Ticket) {
 	out.RawByte('{')
 	first := true
 	_ = first
@@ -77,29 +81,34 @@ func easyjsonB39c1f48EncodeRsoiKpKTLHInternalModels(out *jwriter.Writer, in Tick
 		out.RawString(prefix)
 		out.RawText((in.UserUUID).MarshalText())
 	}
+	{
+		const prefix string = ",\"date\":"
+		out.RawString(prefix)
+		out.Raw((in.Date).MarshalJSON())
+	}
 	out.RawByte('}')
 }
 
 // MarshalJSON supports json.Marshaler interface
 func (v Ticket) MarshalJSON() ([]byte, error) {
 	w := jwriter.Writer{}
-	easyjsonB39c1f48EncodeRsoiKpKTLHInternalModels(&w, v)
+	easyjsonB39c1f48EncodeRSOICWInternalModels(&w, v)
 	return w.Buffer.BuildBytes(), w.Error
 }
 
 // MarshalEasyJSON supports easyjson.Marshaler interface
 func (v Ticket) MarshalEasyJSON(w *jwriter.Writer) {
-	easyjsonB39c1f48EncodeRsoiKpKTLHInternalModels(w, v)
+	easyjsonB39c1f48EncodeRSOICWInternalModels(w, v)
 }
 
 // UnmarshalJSON supports json.Unmarshaler interface
 func (v *Ticket) UnmarshalJSON(data []byte) error {
 	r := jlexer.Lexer{Data: data}
-	easyjsonB39c1f48DecodeRsoiKpKTLHInternalModels(&r, v)
+	easyjsonB39c1f48DecodeRSOICWInternalModels(&r, v)
 	return r.Error()
 }
 
 // UnmarshalEasyJSON supports easyjson.Unmarshaler interface
 func (v *Ticket) UnmarshalEasyJSON(l *jlexer.Lexer) {
-	easyjsonB39c1f48DecodeRsoiKpKTLHInternalModels(l, v)
+	easyjsonB39c1f48DecodeRSOICWInternalModels(l, v)
 }

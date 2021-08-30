@@ -7,6 +7,7 @@ import (
 	"github.com/google/uuid"
 	"github.com/gorilla/mux"
 	"github.com/mailru/easyjson"
+	"log"
 	"net/http"
 )
 
@@ -21,14 +22,31 @@ func NewTicketHandler(repo tickets.IRepo) *TicketHandler {
 //header: Authorization: bearer <jwt>
 //GET /tickets
 func (h *TicketHandler) GetMyTickets(w http.ResponseWriter, r *http.Request) {
-	userUUID := middleware.UserUUID(r)
-	getTickets, status := h.repo.GetTickets(userUUID)
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Access-Control-Allow-Headers", "*")
+	if r.Method == http.MethodOptions {
+		return
+	}
+	vars := mux.Vars(r)
+	uuids, _ := vars["UUID"]
+	id, err := uuid.Parse(uuids)
+	if err != nil {
+		log.Print(err)
+	}
+
+	getTickets, status := h.repo.GetTickets(id)
 	middleware.Response(w, status, getTickets)
 }
 
 //POST /tickets
 //body: { flightUid, date }
 func (h *TicketHandler) BuyTicket(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Access-Control-Allow-Headers", "*")
+	if r.Method == http.MethodOptions {
+		return
+	}
+
 	ticket := models.Ticket{}
 	err := easyjson.UnmarshalFromReader(
 		r.Body,
@@ -45,6 +63,12 @@ func (h *TicketHandler) BuyTicket(w http.ResponseWriter, r *http.Request) {
 //header: Authorization: bearer <jwt>
 //DELETE /tickets/{ticketUid}
 func (h *TicketHandler) ReturnTicket(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Access-Control-Allow-Headers", "*")
+	if r.Method == http.MethodOptions {
+		return
+	}
+
 	vars := mux.Vars(r)
 	uuids, _ := vars["UUID"]
 	id, err := uuid.Parse(uuids)
@@ -58,6 +82,12 @@ func (h *TicketHandler) ReturnTicket(w http.ResponseWriter, r *http.Request) {
 
 //GET /tickets/{ticketUid}
 func (h *TicketHandler) TicketInfo(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Access-Control-Allow-Headers", "*")
+	if r.Method == http.MethodOptions {
+		return
+	}
+
 	vars := mux.Vars(r)
 	uuids, _ := vars["UUID"]
 	id, err := uuid.Parse(uuids)

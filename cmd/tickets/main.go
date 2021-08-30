@@ -1,19 +1,17 @@
 package main
 
 import (
+	"RSOI_CW/internal/pkg/tickets/delivery"
+	"RSOI_CW/internal/pkg/tickets/repo"
 	"context"
 	"errors"
 	"fmt"
 	"github.com/gorilla/mux"
 	"github.com/jackc/pgx/v4/pgxpool"
 	"github.com/joho/godotenv"
-	"github.com/rs/cors"
 	"log"
 	"net/http"
 	"os"
-	"RSOI_CW/internal/pkg/tickets/delivery"
-	 "RSOI_CW/internal/pkg/tickets/repo"
-	"strings"
 )
 
 func init() {
@@ -52,17 +50,11 @@ func run() error {
 
 	r := mux.NewRouter()
 
-	r.HandleFunc("/api/v1/tickets", handler.GetMyTickets).Methods("GET")
-	r.HandleFunc("/api/v1/tickets", handler.BuyTicket).Methods("POST")
-	r.HandleFunc("/api/v1/tickets/{UUID}", handler.ReturnTicket).Methods("DELETE")
+	r.HandleFunc("/api/v1/tickets/{UUID}", handler.GetMyTickets).Methods(http.MethodGet, http.MethodOptions)
+	r.HandleFunc("/api/v1/tickets", handler.BuyTicket).Methods(http.MethodPost, http.MethodOptions)
+	r.HandleFunc("/api/v1/tickets/{UUID}", handler.ReturnTicket).Methods(http.MethodDelete, http.MethodOptions)
 
-	c := cors.New(cors.Options{
-		AllowedOrigins:   strings.Split(os.Getenv("TICKETS_ORIGINS"), " "),
-		AllowCredentials: true,
-	})
-
-	corsHandler := c.Handler(r)
-	srv := http.Server{Handler: corsHandler, Addr: fmt.Sprintf(":%s", port)}
+	srv := http.Server{Handler: r, Addr: fmt.Sprintf(":%s", port)}
 	http.Handle("/", r)
 
 	log.Print("tickets running on: ", srv.Addr)

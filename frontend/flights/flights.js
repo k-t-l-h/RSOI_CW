@@ -1,4 +1,7 @@
 async function ShowAllFlights() {
+    main = document.getElementById('container')
+    main.innerHTML = '';
+
     navigate('/tickets');
     const url = 'http://127.0.0.1:8030/api/v1/flights';
 
@@ -13,21 +16,26 @@ async function ShowAllFlights() {
         main = document.getElementById('container')
         main.innerHTML = '';
         let body = await response.json();
+        console.log(body);
         for (let i = 0; i < body.length; i++) {
             d = document.createElement('div');
             d.setAttribute("id", body[i].id);
             d.setAttribute("class", "flight-item");
 
-            a = document.createElement('a');
+            a = document.createElement('p');
             a.innerText = body[i].from_city;
             a.setAttribute("id", body[i].from);
-            a.setAttribute('onclick', 'ShowOneFlight(${body[i].from}))');
+            a.setAttribute('onclick', 'ShowOneFlight("' +body[i].from + '")')
             d.appendChild(a);
 
-            a = document.createElement('a');
+            a = document.createElement('p');
             a.innerText = body[i].to_city;
             a.setAttribute("id", body[i].to);
-            a.setAttribute('onclick', 'ShowOneFlight(${body[i].to}))');
+            a.setAttribute('onclick', 'ShowOneFlight("' +body[i].to + '")');
+            d.appendChild(a);
+
+            a = document.createElement('p');
+            a.innerText = body[i].date;
             d.appendChild(a);
 
             main.appendChild(d);
@@ -40,5 +48,5 @@ async function ShowAllFlights() {
 }
 
 async function ShowOneFlight(id) {
-
+    console.log(id)
 }
