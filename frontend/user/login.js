@@ -6,14 +6,17 @@ async function login() {
    let auth = user +':' + user_pass;
    let response = await fetch(url, {
       method: 'POST',
-      credentials: 'same-origin',
+      credentials: 'include',
       headers: {
          'Authorization': `Basic ${(btoa(auth))}`,
-         'Access-Control-Allow-Origin': '*'
+         'Access-Control-Allow-Origin': 'http://127.0.0.1:8887/'
       },
    });
    if (response.ok) {
-      document.cookie = "username=${user}; path=/; expires=Tue, 19 Jan 2038 03:14:07 GMT"
+      console.log(document.cookie)
+      response.headers.forEach(function(val, key) { console.log(key + ' -> ' + val); });
+      console.log(document.cookie)
+      //document.cookie = response.headers.get('Set-Cookie');
       b1 = document.getElementById('login');
       b1.parentNode.removeChild(b1);
       b2 = document.getElementById('container');
