@@ -12,4 +12,6 @@ type Flight struct {
 	To   uuid.UUID `json:"to"`
 	ToCity string `json:"to_city,omitempty"`
 	Date time.Time `json:"date"`
+	Tickets  int `json:"tickets"`
+	TicketsSold int `json:"tickets_sold"`
 }

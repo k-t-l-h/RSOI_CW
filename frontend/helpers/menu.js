@@ -2,7 +2,7 @@ window.onload = addMenu;
 
 const buttons = ["Рейсы", "Аэропорты"];
 const functions = ["ShowAllFlights()", "ShowAllAirports()"];
-function addMenu() {
+async function addMenu() {
     main = document.getElementById('main')
     main.innerHTML = '';
 
@@ -15,7 +15,7 @@ function addMenu() {
         a.innerText = buttons[i];
         d.appendChild(a);
     }
-    let admin = CheckAdmin();
+    let admin = await CheckAdmin();
     if (admin === true) {
         a = document.createElement('a');
         a.innerText = 'Админка';
@@ -23,9 +23,7 @@ function addMenu() {
         a.setAttribute('onclick', 'addAdminBlock()');
         d.appendChild(a);
     }
-
-    let auth = getCookie('username');
-    if (auth === undefined) {
+    if (isAuthed() === false) {
         a = document.createElement('a');
         a.innerText = 'Login';
         a.setAttribute('id', 'login');

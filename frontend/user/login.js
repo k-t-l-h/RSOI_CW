@@ -36,17 +36,11 @@ async function login() {
 async function signup() {
    let user = document.getElementById("username").value;
    let user_pass = document.getElementById("password").value;
-   let user_pass_2 = document.getElementById("password-2").value;
+   let role = document.getElementById("role").value;
 
-   if (user_pass !== user_pass_2) {
-      let validityState = document.getElementById("password").validity;
-      console.log(validityState);
-      document.getElementById("password").setCustomValidity('Пароли не совпадают');
-      document.getElementById("password").reportValidity();
-      console.log(document.getElementById("password").validity);
-   } else {
-      const url = 'http://127.0.0.1:8010/api/v1/auth';
-      const data = {login: user, password: user_pass};
+
+      const url = 'http://127.0.0.1:8010/api/v1/users';
+      const data = {login: user, password: user_pass, role: role};
 
       let response = await fetch(url, {
          method: 'POST',
@@ -58,12 +52,10 @@ async function signup() {
       });
       if (response.ok) {
          let user = await response.json();
-         //TODO: проставить тег isAuth
       } else {
-         //TODO: вывести ошибку
          console.log("Ошибка HTTP: " + response.status);
       }
-   }
+
 }
 
 function utf8_to_b64(str) {
@@ -72,4 +64,17 @@ function utf8_to_b64(str) {
 
 function b64_to_utf8(str) {
    return decodeURIComponent(escape(window.atob(str)));
+}
+
+async function isAuthed() {
+   const url = 'http://127.0.0.1:8010/api/v1/verify';
+
+   let response = await fetch(url, {
+      method: 'POST',
+      credentials: 'same-origin',
+      headers: {
+         'Access-Control-Allow-Origin': '*'
+      },
+   });
+   return response.ok;
 }
