@@ -15,6 +15,7 @@ async function CheckAdmin() {
 }
 
 function addAdminBlock() {
+    navigate('/admin');
     main = document.getElementById('container')
     main.innerHTML = '';
 

@@ -55,13 +55,32 @@ function getCookie(name) {
 }
 
 function navigate(path) {
-    window.history.pushState({}, path, path);
+    window.history.pushState(path, path, path);
 }
 
 
+window.onpopstate = function (event) {
+    state = event.state === null? 'state' : event.state;
+    render(state);
+};
 
-/*window.onload = function () {
-    console.log("Here");
-    console.log(window.location);
+function render(state) {
+    console.log(state);
+    switch (state) {
+        case '/user':
+            addUserBlock();
+            break;
+        case '/airports':
+            ShowAllAirports();
+            break;
+        case '/admin':
+            addAdminBlock();
+            break;
+        case '/tickets':
+            GetAll();
+            break;
+        default:
+            ShowAllFlights();
+            break;
+    }
 }
- */
