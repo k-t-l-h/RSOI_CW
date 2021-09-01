@@ -54,34 +54,27 @@ func run() error {
 	//header: Authorization: basic(<login>:<password>)
 	//POST /auth -> JWT token
 	r.HandleFunc("/api/v1/auth",
-		handler.GetToken).Methods("POST", "OPTIONS")
+		handler.GetToken).Methods(http.MethodPost, http.MethodOptions)
 
 	//Проверка токена пользователя.
 	//header: Authorization: bearer <jwt>
 	//POST /verify
 	r.HandleFunc("/api/v1/verify",
-		handler.CheckToken).Methods("POST")
+		handler.CheckToken).Methods(http.MethodPost, http.MethodOptions)
 
 	r.HandleFunc("/api/v1/admin",
-		handler.CheckAdminToken).Methods("POST")
+		handler.CheckAdminToken).Methods(http.MethodPost, http.MethodOptions)
 
 	//Список всех пользователей. [A][G]
 	//GET /users
 	r.HandleFunc("/api/v1/users",
-		handler.GetAllUsers).Methods("GET")
+		handler.GetAllUsers).Methods(http.MethodGet, http.MethodOptions)
 
 	//Добавление нового пользователя. [A][G]
 	//POST /users
 	r.HandleFunc("/api/v1/users",
-		handler.AddUser).Methods("POST")
+		handler.AddUser).Methods(http.MethodPost, http.MethodOptions)
 
-	/*c := cors.New(cors.Options{
-		AllowedOrigins:   strings.Split(os.Getenv("AUTH_ORIGINS"), " "),
-		AllowCredentials: true,
-	})
-	 */
-
-	//corsHandler := c.Handler(r)
 	srv := http.Server{Handler: r, Addr: fmt.Sprintf(":%s", port)}
 	http.Handle("/", r)
 

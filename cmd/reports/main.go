@@ -1,6 +1,8 @@
 package main
 
 import (
+	"RSOI_CW/internal/pkg/report/delivery"
+	"RSOI_CW/internal/pkg/report/repo"
 	"context"
 	"errors"
 	"fmt"
@@ -11,8 +13,6 @@ import (
 	"log"
 	"net/http"
 	"os"
-	"RSOI_CW/internal/pkg/report/delivery"
-	"RSOI_CW/internal/pkg/report/repo"
 	"strings"
 )
 

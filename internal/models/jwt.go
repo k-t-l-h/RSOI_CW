@@ -12,3 +12,8 @@ type Token struct {
 func (t Token) Valid() error {
 	return nil
 }
+
+type TokenResponse struct {
+	Id  uuid.UUID
+	Token string
+}

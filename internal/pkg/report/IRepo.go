@@ -1,6 +1,6 @@
 package report
 
-import "rsoi-kp-k-t-l-h/internal/models"
+import "RSOI_CW/internal/models"
 
 type IRepo interface {
 	AddStat(report models.Report) int

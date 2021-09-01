@@ -1,17 +1,18 @@
 async function CheckAdmin() {
     return true;
-    /*const url = 'http://127.0.0.1:8010/api/v1/admin';
+    const url = 'http://127.0.0.1:8010/api/v1/admin';
+    let token = localStorage.getItem('token');
 
     let response = await fetch(url, {
         method: 'POST',
         credentials: 'same-origin',
         headers: {
-            'Access-Control-Allow-Origin': '*'
+            'Access-Control-Allow-Origin': 'http://127.0.0.1:8887/'
         },
+        body: {token: token}
     });
     return response.ok;
 
-     */
 }
 
 function addAdminBlock() {

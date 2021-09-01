@@ -1,7 +1,7 @@
 window.onload = addMenu;
 
-const buttons = ["Рейсы", "Аэропорты"];
-const functions = ["ShowAllFlights()", "ShowAllAirports()"];
+const buttons = ["Рейсы", "Аэропорты", "Билеты"];
+const functions = ["ShowAllFlights()", "ShowAllAirports()", ""];
 async function addMenu() {
     main = document.getElementById('main')
     main.innerHTML = '';
@@ -57,7 +57,6 @@ function getCookie(name) {
 function navigate(path) {
     window.history.pushState(path, path, path);
 }
-
 
 window.onpopstate = function (event) {
     state = event.state === null? 'state' : event.state;

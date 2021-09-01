@@ -13,17 +13,19 @@ async function login() {
       },
    });
    if (response.ok) {
-      console.log(document.cookie)
-      response.headers.forEach(function(val, key) { console.log(key + ' -> ' + val); });
-      console.log(document.cookie)
+      let body = await response.json();
+      localStorage.setItem('token', body.token);
+      localStorage.setItem('user', user);
+
       //document.cookie = response.headers.get('Set-Cookie');
       b1 = document.getElementById('login');
       b1.parentNode.removeChild(b1);
       b2 = document.getElementById('container');
       b2.parentNode.removeChild(b2);
 
+
       d = document.getElementById('navbar');
-      a.innerText = 'User :)';
+      a.innerText =  user;
       a.setAttribute('onclick', 'addUserBlock()');
       a.setAttribute("class", "user button");
       d.appendChild(a);

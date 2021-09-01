@@ -4,6 +4,7 @@ import (
 	"RSOI_CW/internal/models"
 	"RSOI_CW/internal/pkg/auth"
 	"RSOI_CW/internal/pkg/middleware"
+	"encoding/json"
 	"fmt"
 	"github.com/dgrijalva/jwt-go"
 	"github.com/mailru/easyjson"
@@ -82,19 +83,19 @@ func (h *AuthHandler) GetToken(w http.ResponseWriter, r *http.Request) {
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, tokenModel)
 
 	jwtCookie, _ := token.SignedString([]byte(SecretKey))
+	tokenResp := models.TokenResponse{jwtCookie}
 
-	cookie := http.Cookie{Name: "Token", Value: jwtCookie}
-	http.SetCookie(w, &cookie)
+	middleware.Response(w, models.StatusOkey, tokenResp)
 }
 
 func (h *AuthHandler) CheckToken(w http.ResponseWriter, r *http.Request) {
-
-	cookie, err := r.Cookie("Token")
+	var cookie models.TokenResponse
+	err := json.NewDecoder(r.Body).Decode(&cookie)
 	if err != nil {
 		middleware.Response(w, models.StatusNoAuth, nil)
 		return
 	}
-	cookieValue := cookie.Value
+	cookieValue := cookie.Token
 
 	token, err := jwt.ParseWithClaims(cookieValue,
 		&models.Token{}, func(token *jwt.Token) (interface{}, error) {
@@ -125,8 +126,13 @@ func (h *AuthHandler) CheckToken(w http.ResponseWriter, r *http.Request) {
 
 func (h *AuthHandler) CheckAdminToken(w http.ResponseWriter, r *http.Request) {
 
-	cookie, _ := r.Cookie("Token")
-	cookieValue := cookie.Value
+	var cookie models.TokenResponse
+	err := json.NewDecoder(r.Body).Decode(&cookie)
+	if err != nil {
+		middleware.Response(w, models.StatusNoAuth, nil)
+		return
+	}
+	cookieValue := cookie.Token
 
 	token, err := jwt.ParseWithClaims(cookieValue,
 		&models.Token{}, func(token *jwt.Token) (interface{}, error) {
