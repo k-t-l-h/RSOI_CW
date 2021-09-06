@@ -15,5 +15,7 @@ jobs:
         run: echo $(ls)
       - name: Build Docker Images
         run: docker-compose -f docker-compose.yml up --build -d
+      - name: Push Docker Image
+        run: docker-compose push database
       - name: Check
         run: echo 0
