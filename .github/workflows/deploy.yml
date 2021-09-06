@@ -1,0 +1,13 @@
+name: Course work build
+
+on:
+  push:
+    branches: [ main ]
+
+build:
+  runs-on: ubuntu-latest
+  steps:
+    - name: DockerHub Login
+      run: echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
+    - name: Check
+      run: echo 0
