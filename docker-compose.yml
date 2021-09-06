@@ -2,7 +2,92 @@ version: "3.3"
 
 services:
   database:
+    image: postgres:11
+    restart: always
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_PASSWORD: postgres
+  auth:
     build:
       context: .
-      dockerfile: ./build/db.Dockerfile
+      dockerfile: ./build/auth.Dockerfile
+    links:
+      - database
+    expose:
+      - "8010"
+    ports:
+      - "8010:8010"
+    image: ktlh/auth
+  airport:
+    build:
+      context: .
+      dockerfile: ./build/airport.Dockerfile
+    links:
+      - database
+    expose:
+      - "8020"
+    ports:
+      - "8020:8020"
+    image: ktlh/airport
+  bonus:
+    build:
+      context: .
+      dockerfile: ./build/bonus.Dockerfile
+    links:
+      - database
+    expose:
+      - "8050"
+    ports:
+      - "8050:8050"
+    image: ktlh/bonus
+  flight:
+    build:
+      context: .
+      dockerfile: ./build/flights.Dockerfile
+    links:
+      - database
+    expose:
+      - "8030"
+    ports:
+      - "8030:8030"
+    image: ktlh/flight
+  gateway:
+    build:
+      context: .
+      dockerfile: ./build/gateway.Dockerfile
+    links:
+      - database
+    expose:
+      - "8000"
+    ports:
+      - "8000:8000"
+    image: ktlh/gateway
+  reports:
+    build:
+      context: .
+      dockerfile: ./build/reports.Dockerfile
+    links:
+      - database
+    expose:
+      - "8060"
+    ports:
+      - "8060:8060"
+    image: ktlh/reports
+  tickets:
+    build:
+      context: .
+      dockerfile: ./build/tickets.Dockerfile
+    links:
+      - database
+    expose:
+      - "8040"
+    ports:
+      - "8040:8040"
+    image: ktlh/tickets
+
+
+
+
+
 

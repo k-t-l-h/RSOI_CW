@@ -1,14 +1,14 @@
 package delivery
 
 import (
+	"RSOI_CW/internal/models"
+	"RSOI_CW/internal/pkg/middleware"
 	"encoding/json"
 	"fmt"
 	"github.com/mailru/easyjson"
 	"github.com/streadway/amqp"
 	"net/http"
 	"os"
-	"rsoi-kp-k-t-l-h/internal/models"
-	"rsoi-kp-k-t-l-h/internal/pkg/middleware"
 )
 
 type UserHandler struct {

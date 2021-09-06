@@ -1,12 +1,12 @@
 package delivery
 
 import (
+	"RSOI_CW/internal/models"
+	"RSOI_CW/internal/pkg/middleware"
 	"fmt"
 	"github.com/gorilla/mux"
 	"net/http"
 	"os"
-	"rsoi-kp-k-t-l-h/internal/models"
-	"rsoi-kp-k-t-l-h/internal/pkg/middleware"
 )
 
 type GeneralHandler struct {

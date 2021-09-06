@@ -16,6 +16,6 @@ jobs:
       - name: Build Docker Images
         run: docker-compose -f docker-compose.yml up --build -d
       - name: Push Docker Image
-        run: docker-compose push database
+        run: docker-compose push
       - name: Check
         run: echo 0

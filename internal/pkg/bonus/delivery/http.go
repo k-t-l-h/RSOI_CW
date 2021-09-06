@@ -1,10 +1,10 @@
 package delivery
 
 import (
+	"RSOI_CW/internal/pkg/bonus"
+	"RSOI_CW/internal/pkg/middleware"
 	"github.com/google/uuid"
 	"net/http"
-	"rsoi-kp-k-t-l-h/internal/pkg/bonus"
-	"rsoi-kp-k-t-l-h/internal/pkg/middleware"
 )
 
 type BonusHandler struct {

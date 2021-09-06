@@ -11,6 +11,7 @@ ENV POSTGRES_PASSWORD password
 
 RUN apt-get update && apt-get install -y postgresql
 
+
 USER postgres
 
 COPY build/scripts.sql scripts.sql
@@ -21,4 +22,5 @@ RUN service postgresql start &&\
     psql -U postgres -d cw -a -f scripts.sql &&\
     service postgresql stop
 
+EXPOSE 5432
 CMD service postgresql start
