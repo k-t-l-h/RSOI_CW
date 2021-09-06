@@ -3,14 +3,13 @@ ENV TZ=Europe/Moscow
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 ENV DEBIAN_FRONTEND=noninteractive
-ENV PGVER 13
 ENV POSTGRES_HOST /var/run/postgresql/
 ENV POSTGRES_PORT 5432
 ENV POSTGRES_DB cw
 ENV POSTGRES_USER postgres
 ENV POSTGRES_PASSWORD password
 
-RUN apt-get update && apt-get install -y postgresql-$PGVER
+RUN apt-get update && apt-get install -y postgresql
 
 USER postgres
 
