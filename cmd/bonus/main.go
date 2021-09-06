@@ -1,25 +1,22 @@
 package main
 
 import (
+	"RSOI_CW/internal/pkg/bonus/delivery"
+	"RSOI_CW/internal/pkg/bonus/repo"
 	"context"
 	"errors"
 	"fmt"
 	"github.com/gorilla/mux"
 	"github.com/jackc/pgx/v4/pgxpool"
 	"github.com/joho/godotenv"
-	"github.com/rs/cors"
 	"log"
 	"net/http"
 	"os"
-	"RSOI_CW/internal/pkg/bonus/delivery"
-	"RSOI_CW/internal/pkg/bonus/repo"
-	"strings"
 )
 
 func init() {
 	_ = godotenv.Load(".env")
 }
-
 
 func main() {
 	if err := run(); err != nil {
@@ -27,7 +24,6 @@ func main() {
 		os.Exit(2)
 	}
 }
-
 
 func run() error {
 	port, ok := os.LookupEnv("BONUS_PORT")
@@ -54,16 +50,10 @@ func run() error {
 
 	r := mux.NewRouter()
 
-	r.HandleFunc("/api/v1/miles", handler.GetBonus).Methods("GET")
-	r.HandleFunc("/api/v1/miles", handler.AddBonus).Methods("POST")
+	r.HandleFunc("/api/v1/miles", handler.GetBonus).Methods(http.MethodGet, http.MethodOptions)
+	r.HandleFunc("/api/v1/miles", handler.AddBonus).Methods(http.MethodPost, http.MethodOptions)
 
-	c := cors.New(cors.Options{
-		AllowedOrigins:   strings.Split(os.Getenv("BONUS_ORIGINS"), " "),
-		AllowCredentials: true,
-	})
-
-	corsHandler := c.Handler(r)
-	srv := http.Server{Handler: corsHandler, Addr: fmt.Sprintf(":%s", port)}
+	srv := http.Server{Handler: r, Addr: fmt.Sprintf(":%s", port)}
 	http.Handle("/", r)
 
 	log.Print("bonus running on: ", srv.Addr)

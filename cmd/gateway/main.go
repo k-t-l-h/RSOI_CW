@@ -1,19 +1,19 @@
 package main
 
 import (
+	"RSOI_CW/internal/pkg/middleware"
 	"errors"
 	"fmt"
 	"github.com/gorilla/mux"
 	"github.com/joho/godotenv"
 	"github.com/streadway/amqp"
-	"RSOI_CW/internal/pkg/middleware"
 	"strings"
 
+	"RSOI_CW/internal/pkg/gateway/delivery"
 	"github.com/rs/cors"
 	"log"
 	"net/http"
 	"os"
-	"RSOI_CW/internal/pkg/gateway/delivery"
 )
 
 func init() {
@@ -33,8 +33,6 @@ func run() error {
 	if !ok {
 		port = "8000"
 	}
-
-
 
 	url, ok := os.LookupEnv("RABBIT_URL")
 
@@ -57,13 +55,12 @@ func run() error {
 
 	que, err := ch.QueueDeclare(
 		"ReportQueue", // name
-		false,   // durable
-		false,   // delete when unused
-		false,   // exclusive
-		false,   // no-wait
+		false,         // durable
+		false,         // delete when unused
+		false,         // exclusive
+		false,         // no-wait
 		nil,
 	)
-
 
 	handler := delivery.NewGeneralHandler()
 	userHandler := delivery.NewUserHandler(*ch, que)

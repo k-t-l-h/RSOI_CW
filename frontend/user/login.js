@@ -17,7 +17,6 @@ async function login() {
       localStorage.setItem('token', body.token);
       localStorage.setItem('user', user);
 
-      //document.cookie = response.headers.get('Set-Cookie');
       b1 = document.getElementById('login');
       b1.parentNode.removeChild(b1);
       b2 = document.getElementById('container');
@@ -31,7 +30,10 @@ async function login() {
       d.appendChild(a);
 
       } else {
-        console.log("Ошибка HTTP: " + response.status);
+      d = document.createElement('div');
+      d.setAttribute("class", "error");
+      main = document.getElementById('container')
+      main.prepend(d);
    }
 }
 
@@ -54,6 +56,7 @@ async function signup() {
       });
       if (response.ok) {
          let user = await response.json();
+
       } else {
          console.log("Ошибка HTTP: " + response.status);
       }
@@ -69,6 +72,7 @@ function b64_to_utf8(str) {
 }
 
 async function isAuthed() {
+   return false;
    const url = 'http://127.0.0.1:8010/api/v1/verify';
 
    let response = await fetch(url, {

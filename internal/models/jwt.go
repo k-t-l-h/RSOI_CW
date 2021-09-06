@@ -14,6 +14,6 @@ func (t Token) Valid() error {
 }
 
 type TokenResponse struct {
-	Id  uuid.UUID
+	Id    uuid.UUID
 	Token string
 }

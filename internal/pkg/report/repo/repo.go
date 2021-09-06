@@ -16,8 +16,8 @@ func NewReportRepo(pool pgxpool.Pool) *ReportRepo {
 
 func (r *ReportRepo) AddStat(report models.Report) int {
 	if report.State == "Add" {
-	Insert := "INSERT INTO public.reports( \"UserUUID\", \"FlightUUID\", \"TicketUUID\")" +
-		" VALUES ($1, $2, $3);"
+		Insert := "INSERT INTO public.reports( \"UserUUID\", \"FlightUUID\", \"TicketUUID\")" +
+			" VALUES ($1, $2, $3);"
 		exec, err := r.pool.Exec(context.Background(),
 			Insert, report.UserUUID, report.FlightUUID, report.TicketUUID)
 

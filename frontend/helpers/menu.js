@@ -23,7 +23,8 @@ async function addMenu() {
         a.setAttribute('onclick', 'addAdminBlock()');
         d.appendChild(a);
     }
-    if (isAuthed() === false) {
+    let check = await isAuthed();
+    if (check === false) {
         a = document.createElement('a');
         a.innerText = 'Login';
         a.setAttribute('id', 'login');

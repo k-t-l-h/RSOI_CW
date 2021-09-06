@@ -12,7 +12,7 @@ import (
 )
 
 type UserHandler struct {
-	ch amqp.Channel
+	ch  amqp.Channel
 	que amqp.Queue
 }
 
@@ -20,8 +20,7 @@ func NewUserHandler(ch amqp.Channel, que amqp.Queue) *UserHandler {
 	return &UserHandler{ch: ch, que: que}
 }
 
-
-func (h *UserHandler) SendMessage(report models.Report)  {
+func (h *UserHandler) SendMessage(report models.Report) {
 
 	body, _ := json.Marshal(report)
 
@@ -137,7 +136,6 @@ func (h *UserHandler) DeleteTicket(w http.ResponseWriter, r *http.Request) {
 		rp.State = "Delete"
 		h.SendMessage(*rp)
 	}
-
 
 	middleware.CopyResponse(w, resp)
 }

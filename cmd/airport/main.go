@@ -57,7 +57,6 @@ func run() error {
 	r.HandleFunc("/api/v1/airports",
 		handler.GetAirports).Methods(http.MethodGet, http.MethodOptions)
 
-
 	srv := http.Server{Handler: r, Addr: fmt.Sprintf(":%s", port)}
 	http.Handle("/", r)
 

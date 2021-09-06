@@ -102,3 +102,27 @@ body {
     box-shadow:  9px 9px 17px #6c978c,
     -9px -9px 17px #a8ebdc;
 }
+
+.platform {
+    margin: 60px 45px 35px 45px;
+    padding: 60px 45px 35px 45px;
+    border-radius: 50px;
+    background: #e0e0e0;
+    box-shadow:  20px 20px 35px #bebebe,
+    -20px -20px 35px #ffffff;
+
+}
+
+.username, .password, .role {
+    display: block;
+    margin-bottom: 30px;
+    border-radius: 50px;
+    place-content: center;
+    justify-content: center;
+}
+
+.input-fields, .user-input, .pass-input{
+    border-radius: 50px;
+    width: 100%;
+    color: #2E6788;
+}

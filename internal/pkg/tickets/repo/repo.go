@@ -75,7 +75,6 @@ func (r *TicketRepo) GetTicket(uuid uuid.UUID) (models.Ticket, int) {
 	return ticket, models.StatusOkey
 }
 
-
 func (r *TicketRepo) DeleteTicket(uuid uuid.UUID) int {
 	DeleteTicket := "DELETE FROM public.ticket WHERE \"TicketUUID\" = $1;"
 

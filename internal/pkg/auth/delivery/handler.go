@@ -154,7 +154,7 @@ func (h *AuthHandler) CheckAdminToken(w http.ResponseWriter, r *http.Request) {
 	}
 
 	tk := token.Claims.(*models.Token)
-	if tk.ExpiresAt >= time.Now().Unix() &&tk.UserRole == "admin" {
+	if tk.ExpiresAt >= time.Now().Unix() && tk.UserRole == "admin" {
 		middleware.Response(w, models.StatusOkey, nil)
 	} else {
 		middleware.Response(w, models.StatusNoAuth, nil)

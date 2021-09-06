@@ -1,6 +1,8 @@
 package main
 
 import (
+	"RSOI_CW/internal/models"
+	"RSOI_CW/internal/pkg/report/repo"
 	"context"
 	"encoding/json"
 	"errors"
@@ -9,8 +11,6 @@ import (
 	"github.com/joho/godotenv"
 	"log"
 	"os"
-	"RSOI_CW/internal/models"
-	"RSOI_CW/internal/pkg/report/repo"
 
 	"github.com/streadway/amqp"
 )
@@ -18,7 +18,6 @@ import (
 func init() {
 	_ = godotenv.Load(".env")
 }
-
 
 func main() {
 	if err := runReciever(); err != nil {
@@ -65,11 +64,11 @@ func runReciever() error {
 
 	q, err := ch.QueueDeclare(
 		"ReportQueue", // name
-		false,   // durable
-		false,   // delete when unused
-		false,   // exclusive
-		false,   // no-wait
-		nil,     // arguments
+		false,         // durable
+		false,         // delete when unused
+		false,         // exclusive
+		false,         // no-wait
+		nil,           // arguments
 	)
 
 	if err != nil {

@@ -23,6 +23,10 @@ function addUserBlock() {
 function addLoginBlock() {
     main = document.getElementById('container')
     main.innerHTML = '';
+    d = document.createElement('div');
+    d.setAttribute("class", "platform");
+    main.appendChild(d);
+    main = d;
 
     d = document.createElement('div');
     d.setAttribute("class", "username");

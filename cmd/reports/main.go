@@ -27,7 +27,6 @@ func main() {
 	}
 }
 
-
 func run() error {
 	port, ok := os.LookupEnv("REPORTS_PORT")
 
