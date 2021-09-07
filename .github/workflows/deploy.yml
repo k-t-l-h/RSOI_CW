@@ -16,6 +16,20 @@ jobs:
           username: ${{ secrets.USER }}
           key: ${{ secrets.PRIVATE_KEY }}
           script: echo $(ls)
+      - name: Upload test file
+          uses: actions/upload-artifact@v2
+          with:
+            name: test
+            path: ./testfile.txt
+      - name: Transfer test file to server
+          uses: appleboy/scp-action@v0.0.10
+          with:
+            host: ${{ secrets.HOST }}
+              username: ${{ secrets.USER }}
+              key: ${{ secrets.PRIVATE_KEY }}
+            source: "test/testfile.txt"
+            target: "/home/ubuntu/"
+            strip_components: 1
       - name: DockerHub Login
         run: echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
       - name: Build Docker Images
