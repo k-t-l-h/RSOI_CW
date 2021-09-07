@@ -20,7 +20,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: test
-          path: ./testfile.txt
+          path: ./build/kube.sh
       - name: Download env
         uses: actions/download-artifact@v1
         with:
@@ -31,9 +31,11 @@ jobs:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USER }}
           key: ${{ secrets.PRIVATE_KEY }}
-          source: "test/testfile.txt"
+          source: "test/kube.sh"
           target: "/home/ubuntu/"
           strip_components: 1
+      - name: Check file
+        run:  chmod +x kube.sh && ./kube.sh
       - name: DockerHub Login
         run: echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
       - name: Build Docker Images
