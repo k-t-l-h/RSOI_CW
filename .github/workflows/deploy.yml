@@ -19,3 +19,10 @@ jobs:
         run: docker-compose push
       - name: Check
         run: echo 0
+      - name: echo in AWS
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.PRIVATE_KEY }}
+          script: whoami
