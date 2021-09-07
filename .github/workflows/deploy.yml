@@ -21,6 +21,10 @@ jobs:
         with:
           name: test
           path: ./testfile.txt
+      - name: Download env
+          uses: actions/download-artifact@v1
+          with:
+            name: test
       - name: Transfer test file to server
         uses: appleboy/scp-action@v0.0.10
         with:
