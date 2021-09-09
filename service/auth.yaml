@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hello-node
+spec:
+  selector:
+    matchLabels:
+      run: hello-node
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        run: hello-node
+    spec:
+      containers:
+        - name: hello-node
+          image: hello-node
+          ports:
+            - containerPort: 8080
+              protocol: TCP
