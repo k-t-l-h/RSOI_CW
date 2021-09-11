@@ -18,7 +18,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: test
-          path: ./service/ingress.yaml
+          path: ./docker-compose.yml
       - name: Download env
         uses: actions/download-artifact@v1
         with:
@@ -38,7 +38,7 @@ jobs:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USER }}
           key: ${{ secrets.PRIVATE_KEY }}
-          source: "test/ingress.yaml"
+          source: "test/docker-compose.yml"
           target: "/home/ubuntu/"
           strip_components: 1
       - name: kube.sh in AWS

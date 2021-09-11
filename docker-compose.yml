@@ -12,6 +12,8 @@ services:
     build:
       context: .
       dockerfile: ./build/auth.Dockerfile
+      labels:
+        kompose.service.type: LoadBalancer
     links:
       - database
     expose:
@@ -23,6 +25,8 @@ services:
     build:
       context: .
       dockerfile: ./build/airport.Dockerfile
+      labels:
+        kompose.service.type: LoadBalancer
     links:
       - database
     expose:
@@ -34,6 +38,8 @@ services:
     build:
       context: .
       dockerfile: ./build/bonus.Dockerfile
+      labels:
+        kompose.service.type: LoadBalancer
     links:
       - database
     expose:
@@ -45,6 +51,8 @@ services:
     build:
       context: .
       dockerfile: ./build/flights.Dockerfile
+      labels:
+        kompose.service.type: LoadBalancer
     links:
       - database
     expose:
@@ -56,6 +64,8 @@ services:
     build:
       context: .
       dockerfile: ./build/gateway.Dockerfile
+      labels:
+        kompose.service.type: LoadBalancer
     links:
       - database
     expose:
@@ -67,6 +77,8 @@ services:
     build:
       context: .
       dockerfile: ./build/reports.Dockerfile
+      labels:
+        kompose.service.type: LoadBalancer
     links:
       - database
     expose:
@@ -78,6 +90,8 @@ services:
     build:
       context: .
       dockerfile: ./build/tickets.Dockerfile
+      labels:
+        kompose.service.type: LoadBalancer
     links:
       - database
     expose:
