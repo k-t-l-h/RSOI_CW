@@ -70,14 +70,20 @@ func easyjson2028b946EncodeRSOICWInternalModels(out *jwriter.Writer, in Flight) 
 	out.RawByte('{')
 	first := true
 	_ = first
-	{
+	if true {
 		const prefix string = ",\"id\":"
+		first = false
 		out.RawString(prefix[1:])
 		out.RawText((in.ID).MarshalText())
 	}
 	{
 		const prefix string = ",\"from\":"
-		out.RawString(prefix)
+		if first {
+			first = false
+			out.RawString(prefix[1:])
+		} else {
+			out.RawString(prefix)
+		}
 		out.RawText((in.From).MarshalText())
 	}
 	if in.FromCity != "" {

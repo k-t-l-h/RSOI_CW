@@ -19,11 +19,13 @@ func NewFlightRepo(pool pgxpool.Pool) *FlightRepo {
 
 func (r *FlightRepo) CreateFlight(flight models.Flight) int {
 
-	Create := "INSERT INTO public.flight(\"From\", \"To\", \"Date\", \"FlightID\") " +
-		"VALUES ($1, $2, $3, $4);"
+	Create := "INSERT INTO public.flight(\"From\", \"From_city\", \"To\", \"To_city\", \"Date\", \"FlightID\") " +
+		"VALUES ($1, $2, $3, $4, $5, $6);"
 
-	tag, err := r.pool.Exec(context.Background(), Create, flight.From, flight.To, flight.Date, uuid.New())
+	tag, err := r.pool.Exec(context.Background(), Create, flight.From, flight.FromCity,
+		flight.To, flight.ToCity, flight.Date, uuid.New())
 	if err != nil {
+		log.Print(err)
 		return models.StatusError
 	}
 	if tag.RowsAffected() != 1 {
@@ -73,9 +75,20 @@ func (r *FlightRepo) ReadFlights() ([]models.Flight, int) {
 
 func (r *FlightRepo) UpdateFlight(FlightUUID uuid.UUID, flight models.Flight) int {
 	UpdateFL := "UPDATE public.flight " +
-		"SET \"Date\"=$1 WHERE \"FlightID\"=$2;"
+		"SET \"From\"=$1, " +
+		"\"From_city\"=$2, " +
+		"\"To\"=$3, " +
+		"\"To_city\"=$4, " +
+		"\"Date\"=$5 " +
+		"WHERE \"FlightID\"=$6;"
 
-	tag, err := r.pool.Exec(context.Background(), UpdateFL, flight.Date, FlightUUID)
+	tag, err := r.pool.Exec(context.Background(), UpdateFL,
+		flight.From,
+		flight.FromCity,
+		flight.To,
+		flight.ToCity,
+		flight.Date,
+		FlightUUID)
 	if err != nil {
 		return models.StatusError
 	}

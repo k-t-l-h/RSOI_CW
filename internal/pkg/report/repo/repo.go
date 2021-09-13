@@ -55,7 +55,7 @@ func (r *ReportRepo) GetFilling() ([]models.ReportFilling, int) {
 	result := []models.ReportFilling{}
 	for query.Next() {
 		rep := models.ReportFilling{}
-		err = query.Scan(rep.FlightUUID, rep.Tickets)
+		err = query.Scan(&rep.FlightUUID, &rep.Tickets)
 		if err != nil {
 			return nil, models.StatusError
 		}
@@ -74,7 +74,7 @@ func (r *ReportRepo) CheckByUsers() ([]models.ReportUsers, int) {
 	result := []models.ReportUsers{}
 	for query.Next() {
 		rep := models.ReportUsers{}
-		err = query.Scan(rep.UserUUID, rep.FlightsMade)
+		err = query.Scan(&rep.UserUUID, &rep.FlightsMade)
 		if err != nil {
 			return nil, models.StatusError
 		}

@@ -17,12 +17,13 @@ func NewTicketRepo(pool pgxpool.Pool) *TicketRepo {
 }
 
 func (r *TicketRepo) GetTickets(uuid uuid.UUID) ([]models.Ticket, int) {
-	SelectMy := "SELECT \"TicketUUID\", \"FlightUUID\", \"UserUUID\",  \"Date\" date " +
+	SelectMy := "SELECT \"TicketUUID\", \"FlightUUID\", \"UserUUID\",  \"Date\" " +
 		"FROM public.ticket WHERE \"UserUUID\" = $1;"
 
 	log.Print(uuid)
 	rows, err := r.pool.Query(context.Background(), SelectMy, uuid)
 	if err != nil {
+		log.Print(err)
 		return nil, models.StatusError
 	}
 
@@ -31,6 +32,7 @@ func (r *TicketRepo) GetTickets(uuid uuid.UUID) ([]models.Ticket, int) {
 		ticket := models.Ticket{}
 		err = rows.Scan(&ticket.TicketUUID, &ticket.FlightUUID, &ticket.UserUUID, &ticket.Date)
 		if err != nil {
+			log.Print(err)
 			return nil, models.StatusError
 		}
 		result = append(result, ticket)
@@ -91,12 +93,13 @@ func (r *TicketRepo) DeleteTicket(uuid uuid.UUID) int {
 }
 
 func (r *TicketRepo) CreateTicket(ticket models.Ticket) int {
-	InsertTicket := "INSERT INTO public.ticket(\"TicketUUID\", \"FlightUUID\", \"UserUUID\") " +
-		" VALUES ($1, $2, $3);"
+	InsertTicket := "INSERT INTO public.ticket(\"TicketUUID\", \"FlightUUID\", \"UserUUID\"," +
+		",  \"Date\" ) " +
+		" VALUES ($1, $2, $3, $4);"
 
 	ticket.TicketUUID = uuid.New()
 	exec, err := r.pool.Exec(context.Background(), InsertTicket,
-		ticket.TicketUUID, ticket.FlightUUID, ticket.UserUUID)
+		ticket.TicketUUID, ticket.FlightUUID, ticket.UserUUID, ticket.Date)
 
 	if err != nil {
 		return models.StatusError

@@ -1,10 +1,3 @@
-function Buy() {
-    let from = document.getElementById("username").value;
-    let to = document.getElementById("password").value;
-    let date = document.getElementById("password-2").value;
-
-}
-
 async function GetAll() {
     navigate('/tickets');
     const url = 'http://127.0.0.1:8040/api/v1/tickets';
@@ -24,8 +17,6 @@ async function GetAll() {
             d.setAttribute("id", tickets.all[i].id);
             d.setAttribute("class", "ticket-item");
 
-
-            //link.addEventListener('onclick', ShowAirport.bind(airports.all[i].id), false);
             id = document.createElement('p');
             id.innerText = tickets.all[i].id;
             namef = document.createElement('p');
@@ -55,20 +46,37 @@ async function GetAll() {
 
 }
 
-function Return(id) {
+async function Return(id) {
     main = document.getElementById(id);
-    main.childNodes[main.childElementCount-1].disabled = true;
-    console.log('Returned');
+    main.childNodes[main.childElementCount - 1].disabled = true;
+
+    const url = 'http://127.0.0.1:8040/api/v1/tickets/' + id.toString();
+    let response = await fetch(url, {
+        method: 'DELETE',
+        credentials: 'include',
+        headers: {
+            'Authorization': `Bearer ${user}`,
+            'Access-Control-Allow-Origin': 'http://127.0.0.1:8887'
+        },
+    });
+    if (response.ok) {
+        main.parentNode.removeChild(main);
+    } else {
+        main.childNodes[main.childElementCount - 1].disabled = false;
+    }
 }
 
 async function GetMyTickets(id) {
-    const url = 'http://127.0.0.1:8040/api/v1/tickets/'+id.toString();
+    const url = 'http://127.0.0.1:8040/api/v1/tickets';
+
+    user  = localStorage.getItem("token");
 
     let response = await fetch(url, {
         method: 'GET',
-        credentials: 'same-origin',
+        credentials: 'include',
         headers: {
-            'Access-Control-Allow-Origin': '*'
+            'Authorization': `Bearer ${user}`,
+            'Access-Control-Allow-Origin': 'http://127.0.0.1:8887'
         },
     });
     if (response.ok) {
@@ -85,7 +93,7 @@ async function GetMyTickets(id) {
         let tickets = await response.json();
         for (let i = 0; i < tickets.length; i++) {
             d = document.createElement('div');
-            d.setAttribute("id", tickets[i].id);
+            d.setAttribute("id", tickets[i].ticket_uuid);
             d.setAttribute("class", "ticket-item");
 
 
@@ -97,7 +105,7 @@ async function GetMyTickets(id) {
 
             link = document.createElement('div');
             link.innerText = 'Return';
-            link.setAttribute('onclick', 'Return(' + d.id + ')');
+            link.setAttribute('onclick', 'Return("' + tickets[i].ticket_uuid + '")');
             link.setAttribute("class", "btn");
             if (tickets[i].date < Date()) {
                 link.disabled = false;
@@ -115,4 +123,27 @@ async function GetMyTickets(id) {
     }
 
 
+}
+
+async function ShowBuyBlock(id, date) {
+    const url = 'http://127.0.0.1:8040/api/v1/tickets';
+
+    user  = localStorage.getItem("token");
+    console.log(user);
+
+    let response = await fetch(url, {
+        method: 'POST',
+        credentials: 'same-origin',
+        headers: {
+            'Authorization': `Bearer ${user}`,
+            'Access-Control-Allow-Origin': 'http://127.0.0.1:8887/'
+        },
+        body: JSON.stringify({flight_uuid: id, date: date}),
+    });
+    if (response.ok) {
+        render("/user");
+
+    } else {
+        addError("Невозможно купить билеты")
+    }
 }

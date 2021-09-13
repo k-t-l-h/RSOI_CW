@@ -16,6 +16,12 @@ function addUserBlock() {
     a.setAttribute("class", "btn");
     d.appendChild(a);
 
+    a = document.createElement('div');
+    a.innerText = 'Бонусы';
+    a.setAttribute('onclick', 'GetMyBonus()')
+    a.setAttribute("class", "btn");
+    d.appendChild(a);
+
     main.appendChild(d);
 }
 

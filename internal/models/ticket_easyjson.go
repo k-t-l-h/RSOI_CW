@@ -66,17 +66,23 @@ func easyjsonB39c1f48EncodeRSOICWInternalModels(out *jwriter.Writer, in Ticket) 
 	out.RawByte('{')
 	first := true
 	_ = first
-	{
+	if true {
 		const prefix string = ",\"ticket_uuid\":"
+		first = false
 		out.RawString(prefix[1:])
 		out.RawText((in.TicketUUID).MarshalText())
 	}
 	{
 		const prefix string = ",\"flight_uuid\":"
-		out.RawString(prefix)
+		if first {
+			first = false
+			out.RawString(prefix[1:])
+		} else {
+			out.RawString(prefix)
+		}
 		out.RawText((in.FlightUUID).MarshalText())
 	}
-	{
+	if true {
 		const prefix string = ",\"user_uuid\":"
 		out.RawString(prefix)
 		out.RawText((in.UserUUID).MarshalText())

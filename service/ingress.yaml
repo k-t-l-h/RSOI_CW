@@ -10,6 +10,6 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: hello-node
+                name: auth
                 port:
-                  number: 8080
+                  number: 8010

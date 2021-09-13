@@ -9,11 +9,9 @@ import (
 	"github.com/gorilla/mux"
 	"github.com/jackc/pgx/v4/pgxpool"
 	"github.com/joho/godotenv"
-	"github.com/rs/cors"
 	"log"
 	"net/http"
 	"os"
-	"strings"
 )
 
 func init() {
@@ -52,16 +50,12 @@ func run() error {
 
 	r := mux.NewRouter()
 
-	r.HandleFunc("/api/v1/reports/flights", handler.CheckByUsers).Methods("GET")
-	r.HandleFunc("/api/v1/reports/flights-filling", handler.CheckFilling).Methods("GET")
+	r.HandleFunc("/api/v1/reports/flights",
+		handler.CheckByUsers).Methods(http.MethodGet, http.MethodOptions)
+	r.HandleFunc("/api/v1/reports/flights-filling", handler.CheckFilling).
+		Methods(http.MethodGet, http.MethodOptions)
 
-	c := cors.New(cors.Options{
-		AllowedOrigins:   strings.Split(os.Getenv("REPORT_ORIGINS"), " "),
-		AllowCredentials: true,
-	})
-
-	corsHandler := c.Handler(r)
-	srv := http.Server{Handler: corsHandler, Addr: fmt.Sprintf(":%s", port)}
+	srv := http.Server{Handler: r, Addr: fmt.Sprintf(":%s", port)}
 	http.Handle("/", r)
 
 	log.Print("report running on: ", srv.Addr)

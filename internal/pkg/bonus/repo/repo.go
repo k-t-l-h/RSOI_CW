@@ -28,16 +28,17 @@ func (r *BonusRepo) GetBonus(UserUUID uuid.UUID) (int, int) {
 }
 
 func (r *BonusRepo) SetBonus(UserUUID uuid.UUID, Extra int) (int, int) {
-	UpdateBonus := "UPDATE public.bonus SET \"Balance\"=\"Balance\"+$1  WHERE \"UserUUID\"=$2;"
+	UpdateBonus := "UPDATE public.bonus SET \"Balance\"=\"Balance\"+$1  WHERE \"UserUUID\"=$2 " +
+		"RETURNING \"Balance\";"
 
 	row := r.pool.QueryRow(context.Background(), UpdateBonus, Extra, UserUUID)
 
 	var balance int
 	err := row.Scan(&balance)
 	if err != nil {
-		return balance, models.StatusOkey
+		return 0, models.StatusNotFound
 	}
-	return 0, models.StatusNotFound
+	return balance, models.StatusOkey
 }
 
 func (r *BonusRepo) CreateBonus(UserUUID uuid.UUID) int {

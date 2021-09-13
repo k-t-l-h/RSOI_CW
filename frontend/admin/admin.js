@@ -1,17 +1,18 @@
 async function CheckAdmin() {
-    return true;
-    const url = 'http://127.0.0.1:8010/api/v1/admin';
-    let token = localStorage.getItem('token');
 
-    let response = await fetch(url, {
-        method: 'POST',
-        credentials: 'same-origin',
-        headers: {
-            'Access-Control-Allow-Origin': 'http://127.0.0.1:8887/'
-        },
-        body: {token: token}
-    });
-    return response.ok;
+        const url = 'http://127.0.0.1:8010/api/v1/admin';
+        let token = localStorage.getItem('token');
+
+        let response = await fetch(url, {
+            method: 'POST',
+            credentials: 'same-origin',
+            headers: {
+                'Access-Control-Allow-Origin': 'http://127.0.0.1:8887/'
+            },
+            body: JSON.stringify({token: token})
+        });
+        return response.ok;
+
 
 }
 
@@ -48,12 +49,12 @@ function addAdminBlock() {
     d = document.createElement('div');
     d.innerText = 'Посмотреть статистику';
     d.setAttribute("class", "airport-items");
-    d.setAttribute('onclick', '');
+    d.setAttribute('onclick', 'getStatistics()');
     main.appendChild(d);
 
     d = document.createElement('div');
     d.innerText = 'Посмотреть статистику 2';
     d.setAttribute("class", "airport-items");
-    d.setAttribute('onclick', '');
+    d.setAttribute('onclick', 'getFillingStatistics()');
     main.appendChild(d);
 }

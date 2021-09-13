@@ -21,8 +21,11 @@ func NewFlightHandler(repo flights.IRepo) *FlightHandler {
 //список всех рейсов
 //GET /flights
 func (h *FlightHandler) AllFlights(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Access-Control-Allow-Origin", "*")
-	w.Header().Set("Access-Control-Allow-Headers", "*")
+	w.Header().Set("Access-Control-Allow-Origin", "http://127.0.0.1:8887")
+	w.Header().Set("Access-Control-Allow-Headers", "Authorization, Access-Control-Allow-Origin, Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers")
+	w.Header().Set("Access-Control-Allow-Credentials", "true")
+	w.Header().Set("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, DELETE")
+
 	if r.Method == http.MethodOptions {
 		return
 	}
@@ -34,6 +37,14 @@ func (h *FlightHandler) AllFlights(w http.ResponseWriter, r *http.Request) {
 //POST /flights
 func (h *FlightHandler) AddFlight(w http.ResponseWriter, r *http.Request) {
 
+	w.Header().Set("Access-Control-Allow-Origin", "http://127.0.0.1:8887")
+	w.Header().Set("Access-Control-Allow-Headers", "Authorization, Access-Control-Allow-Origin, Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers")
+	w.Header().Set("Access-Control-Allow-Credentials", "true")
+	w.Header().Set("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, DELETE")
+
+	if r.Method == http.MethodOptions {
+		return
+	}
 	flight := models.Flight{}
 	err := easyjson.UnmarshalFromReader(
 		r.Body,
@@ -43,6 +54,8 @@ func (h *FlightHandler) AddFlight(w http.ResponseWriter, r *http.Request) {
 		middleware.Response(w, models.StatusBadUUID, nil)
 		return
 	}
+
+	flight.ID = uuid.New()
 	status := h.repo.CreateFlight(flight)
 	middleware.Response(w, status, nil)
 
@@ -51,6 +64,15 @@ func (h *FlightHandler) AddFlight(w http.ResponseWriter, r *http.Request) {
 //изменить рейс
 //PATCH /flights
 func (h *FlightHandler) UpdateFlight(w http.ResponseWriter, r *http.Request) {
+
+	w.Header().Set("Access-Control-Allow-Origin", "http://127.0.0.1:8887")
+	w.Header().Set("Access-Control-Allow-Headers", "Authorization, Access-Control-Allow-Origin, Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers")
+	w.Header().Set("Access-Control-Allow-Credentials", "true")
+	w.Header().Set("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PATCH, DELETE")
+
+	if r.Method == http.MethodOptions {
+		return
+	}
 
 	vars := mux.Vars(r)
 	uuids, _ := vars["UUID"]

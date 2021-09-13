@@ -9,7 +9,7 @@ async function ShowAllFlights() {
         method: 'GET',
         credentials: 'same-origin',
         headers: {
-            'Access-Control-Allow-Origin': '*'
+            'Access-Control-Allow-Origin': 'http://127.0.0.1:8887/'
         },
     });
     if (response.ok) {
@@ -25,18 +25,26 @@ async function ShowAllFlights() {
             a = document.createElement('p');
             a.innerText = body[i].from_city;
             a.setAttribute("id", body[i].from);
-            a.setAttribute('onclick', 'ShowOneFlight("' +body[i].from + '")')
+            //a.setAttribute('onclick', 'ShowOneFlight("' +body[i].from + '")')
             d.appendChild(a);
 
             a = document.createElement('p');
             a.innerText = body[i].to_city;
             a.setAttribute("id", body[i].to);
-            a.setAttribute('onclick', 'ShowOneFlight("' +body[i].to + '")');
+            //a.setAttribute('onclick', 'ShowOneFlight("' +body[i].to + '")');
             d.appendChild(a);
 
             a = document.createElement('p');
             a.innerText = body[i].date;
             d.appendChild(a);
+
+            if (ShowBuyBytton() === true) {
+                a = document.createElement('button');
+                a.setAttribute("class", "signin-button");
+                a.setAttribute('onclick', 'ShowBuyBlock("' + body[i].id +'","' +body[i].date +  '")');
+                a.innerText = 'Купить';
+                d.appendChild(a);
+            }
 
             main.appendChild(d);
         }
@@ -47,69 +55,63 @@ async function ShowAllFlights() {
 
 }
 
-async function ShowOneFlight(id) {
-    console.log(id)
-}
 
-async function ShowOneFlightPatch() {
+async function PatchFlight() {
     let id = document.getElementById("flight-id").value;
+    let from_id = document.getElementById("from-id").value;
+    let from_city = document.getElementById("from-city").value;
+
+    let to_id = document.getElementById("to-id").value;
+    let to_city = document.getElementById("to-city").value;
+
+    let date = document.getElementById("date").value;
 
     const url = 'http://127.0.0.1:8030/api/v1/flights/'+id;
 
+    const data = {from: from_id, from_city: from_city,
+        to: to_id, to_city: to_city, date: date+ 'T00:00:00.000Z'};
+
     let response = await fetch(url, {
-        method: 'GET',
+        method: 'PATCH',
         credentials: 'same-origin',
         headers: {
-            'Access-Control-Allow-Origin': '*'
+            'Content-Type': 'application/json',
         },
+        body: JSON.stringify(data)
     });
     if (response.ok) {
-        main = document.getElementById('container')
-        main.innerHTML = '';
-        let body = await response.json();
-
-        d = document.createElement('div');
-        d.setAttribute("class", "username");
-        inputfield = document.createElement('input');
-        inputfield.setAttribute("type", "text");
-        inputfield.setAttribute("id", "username");
-        inputfield.setAttribute("class", "user-input");
-        inputfield.setAttribute("value", body.id);
-        inputfield.setAttribute("placeholder", "username");
-        d.appendChild(inputfield);
-
-        inputfield = document.createElement('input');
-        inputfield.setAttribute("type", "text");
-        inputfield.setAttribute("id", "username");
-        inputfield.setAttribute("class", "user-input");
-        inputfield.setAttribute("value", body.from);
-        inputfield.setAttribute("placeholder", "username");
-        d.appendChild(inputfield);
-
-
-        inputfield = document.createElement('input');
-        inputfield.setAttribute("type", "text");
-        inputfield.setAttribute("id", "username");
-        inputfield.setAttribute("class", "user-input");
-        inputfield.setAttribute("value", body.to);
-        inputfield.setAttribute("placeholder", "username");
-        d.appendChild(inputfield);
-
-        inputfield = document.createElement('input');
-        inputfield.setAttribute("type", "date");
-        inputfield.setAttribute("id", "username");
-        inputfield.setAttribute("class", "user-input");
-        inputfield.setAttribute("value", body.date);
-        inputfield.setAttribute("placeholder", "username");
-        d.appendChild(inputfield);
-
-
-        main.appendChild(d);
-
-
-
+        render('/');
     } else {
-        console.log("Ошибка Билетов HTTP: " + response.status);
+       addError("Полёт не найден")
     }
 
+}
+
+
+async function AddFlight() {
+    let from_id = document.getElementById("from-id").value;
+    let from_city = document.getElementById("from-city").value;
+
+    let to_id = document.getElementById("to-id").value;
+    let to_city = document.getElementById("to-city").value;
+
+    let date = document.getElementById("date").value;
+
+    const url = 'http://127.0.0.1:8030/api/v1/flights';
+    const data = {from: from_id, from_city: from_city,
+        to: to_id, to_city: to_city, date: date+ 'T00:00:00.000Z'};
+
+    let response = await fetch(url, {
+        method: 'POST',
+        credentials: 'same-origin',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data)
+    });
+    if (response.ok) {
+        render("/");
+    } else {
+        addError("Не получилось создать рейс")
+    }
 }

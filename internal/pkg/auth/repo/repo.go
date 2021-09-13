@@ -33,7 +33,7 @@ func (r *AuthRepo) GetUser(login string, password string) (models.User, int) {
 }
 
 func (r *AuthRepo) GetUsers() ([]models.User, int) {
-	SelectUser := "\nSELECT \"UserUUID\", \"Login\" FROM public.auth;"
+	SelectUser := "\nSELECT \"UserUUID\", \"Login\", \"Role\" FROM public.auth;"
 
 	result := []models.User{}
 
@@ -44,7 +44,7 @@ func (r *AuthRepo) GetUsers() ([]models.User, int) {
 
 	for rows.Next() {
 		user := models.User{}
-		err = rows.Scan(&user.UUID, &user.Login)
+		err = rows.Scan(&user.UUID, &user.Login, &user.Role)
 		if err != nil {
 			return []models.User{}, models.StatusError
 		}
@@ -71,5 +71,5 @@ func (r *AuthRepo) AddUser(user models.User) (models.User, int) {
 	if exec.RowsAffected() == 0 {
 		return models.User{}, models.StatusConflict
 	}
-	return models.User{}, models.StatusOkey
+	return user, models.StatusOkey
 }

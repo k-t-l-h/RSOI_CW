@@ -14,26 +14,35 @@ async function login() {
    });
    if (response.ok) {
       let body = await response.json();
-      localStorage.setItem('token', body.token);
+      localStorage.setItem('token', body.Token);
       localStorage.setItem('user', user);
+
 
       b1 = document.getElementById('login');
       b1.parentNode.removeChild(b1);
-      b2 = document.getElementById('container');
-      b2.parentNode.removeChild(b2);
 
+      b1 = document.getElementById('signup');
+      b1.parentNode.removeChild(b1);
 
       d = document.getElementById('navbar');
+
+      let admin = await CheckAdmin();
+      if (admin === true) {
+         a = document.createElement('a');
+         a.innerText = 'Админка';
+         a.setAttribute('id', 'admin');
+         a.setAttribute('onclick', 'addAdminBlock()');
+         d.appendChild(a);
+      }
+
+      a = document.createElement('a');
       a.innerText =  user;
       a.setAttribute('onclick', 'addUserBlock()');
-      a.setAttribute("class", "user button");
       d.appendChild(a);
+      render('/');
 
       } else {
-      d = document.createElement('div');
-      d.setAttribute("class", "error");
-      main = document.getElementById('container')
-      main.prepend(d);
+         addError("Unauth");
    }
 }
 
@@ -56,9 +65,10 @@ async function signup() {
       });
       if (response.ok) {
          let user = await response.json();
+         render("/");
 
       } else {
-         console.log("Ошибка HTTP: " + response.status);
+         addError("Не получилось создать пользователя")
       }
 
 }
@@ -72,15 +82,16 @@ function b64_to_utf8(str) {
 }
 
 async function isAuthed() {
-   return false;
    const url = 'http://127.0.0.1:8010/api/v1/verify';
 
+   token = localStorage.getItem('token');
    let response = await fetch(url, {
       method: 'POST',
       credentials: 'same-origin',
       headers: {
-         'Access-Control-Allow-Origin': '*'
+         'Access-Control-Allow-Origin': 'http://127.0.0.1:8887/'
       },
+      body: {token: token},
    });
    return response.ok;
 }

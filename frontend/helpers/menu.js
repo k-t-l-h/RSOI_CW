@@ -1,5 +1,6 @@
 window.onload = addMenu;
 
+
 const buttons = ["Рейсы", "Аэропорты", "Билеты"];
 const functions = ["ShowAllFlights()", "ShowAllAirports()", ""];
 async function addMenu() {
@@ -15,14 +16,18 @@ async function addMenu() {
         a.innerText = buttons[i];
         d.appendChild(a);
     }
-    let admin = await CheckAdmin();
-    if (admin === true) {
-        a = document.createElement('a');
-        a.innerText = 'Админка';
-        a.setAttribute('id', 'admin');
-        a.setAttribute('onclick', 'addAdminBlock()');
-        d.appendChild(a);
-    }
+
+
+        let admin = await CheckAdmin();
+        if (admin === true) {
+            a = document.createElement('a');
+            a.innerText = 'Админка';
+            a.setAttribute('id', 'admin');
+            a.setAttribute('onclick', 'addAdminBlock()');
+            d.appendChild(a);
+        }
+
+
     let check = await isAuthed();
     if (check === false) {
         a = document.createElement('a');
@@ -82,5 +87,18 @@ function render(state) {
         default:
             ShowAllFlights();
             break;
+    }
+}
+
+function addError(text) {
+    err = document.getElementById('error');
+    if (err === undefined || err === null) {
+        d = document.createElement('div');
+        d.innerText = text;
+        d.setAttribute("id", "error");
+        main = document.getElementById('container');
+        main.prepend(d);
+    } else {
+        err.innerText = text;
     }
 }

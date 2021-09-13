@@ -2,12 +2,23 @@ version: "3.3"
 
 services:
   database:
-    image: postgres:11
-    restart: always
+    hostname: database
+    build:
+      context: .
+      dockerfile: ./build/db.Dockerfile
+  frontend:
+    hostname: frontend
+    build:
+      context: .
+      dockerfile: ./build/frontend.Dockerfile
     ports:
-      - 5432:5432
-    environment:
-      POSTGRES_PASSWORD: postgres
+      - "8887:8887"
+  rabbit:
+    restart: on-failure
+    image: rabbitmq
+    hostname: rabbit
+    ports:
+      - "5672:5672"
   auth:
     build:
       context: .
@@ -22,6 +33,7 @@ services:
       - "8010:8010"
     image: ktlh/auth
   airport:
+    restart: on-failure
     build:
       context: .
       dockerfile: ./build/airport.Dockerfile

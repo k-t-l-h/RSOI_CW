@@ -1,9 +1,9 @@
 package delivery
 
 import (
+	"RSOI_CW/internal/models"
 	"RSOI_CW/internal/pkg/bonus"
 	"RSOI_CW/internal/pkg/middleware"
-	"github.com/google/uuid"
 	"net/http"
 )
 
@@ -17,14 +17,36 @@ func NewBonusHandler(repo bonus.IRepo) *BonusHandler {
 
 //получение бонусного баланса
 func (h *BonusHandler) GetBonus(w http.ResponseWriter, r *http.Request) {
-	balance, status := h.repo.GetBonus(uuid.UUID{})
-	middleware.Response(w, status, balance)
+	w.Header().Set("Access-Control-Allow-Origin", "http://127.0.0.1:8887")
+	w.Header().Set("Access-Control-Allow-Headers", "Authorization, Access-Control-Allow-Origin, Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers")
+	w.Header().Set("Access-Control-Allow-Credentials", "true")
+	w.Header().Set("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, DELETE")
 
+	if r.Method == http.MethodOptions {
+		return
+	}
+
+	id := middleware.UserUUID(r)
+	balance, status := h.repo.GetBonus(id)
+	bonus := models.Bonus{
+		UserUUID: id,
+		Balance:  balance,
+	}
+	middleware.Response(w, status, bonus)
 }
 
 //изменение бонусной программы
 //здесь должен быть idПолета, чтобы было окей
 func (h *BonusHandler) AddBonus(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Access-Control-Allow-Origin", "http://127.0.0.1:8887")
+	w.Header().Set("Access-Control-Allow-Headers", "Authorization, Access-Control-Allow-Origin, Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers")
+	w.Header().Set("Access-Control-Allow-Credentials", "true")
+	w.Header().Set("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, DELETE")
+
+	if r.Method == http.MethodOptions {
+		return
+	}
+
 	userUUID := middleware.UserUUID(r)
 	_, status := h.repo.SetBonus(userUUID, 1)
 	middleware.Response(w, status, nil)
@@ -32,6 +54,15 @@ func (h *BonusHandler) AddBonus(w http.ResponseWriter, r *http.Request) {
 }
 
 func (h *BonusHandler) NewBonusUser(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Access-Control-Allow-Origin", "http://127.0.0.1:8887")
+	w.Header().Set("Access-Control-Allow-Headers", "Authorization, Access-Control-Allow-Origin, Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers")
+	w.Header().Set("Access-Control-Allow-Credentials", "true")
+	w.Header().Set("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, DELETE")
+
+	if r.Method == http.MethodOptions {
+		return
+	}
+
 	userUUID := middleware.UserUUID(r)
 	status := h.repo.CreateBonus(userUUID)
 	middleware.Response(w, status, nil)

@@ -3,13 +3,19 @@ package middleware
 import (
 	"RSOI_CW/internal/models"
 	"encoding/json"
+	"fmt"
+	"github.com/dgrijalva/jwt-go"
 	"github.com/google/uuid"
+	"log"
 	"net/http"
+	"os"
 )
 
 var DefaultError = models.Error{
 	Message: "This is my error message",
 }
+
+var bearerPrefix = "Bearer "
 
 func Response(w http.ResponseWriter, status int, body interface{}) {
 	w.Header().Set("Content-Type", "application/json")
@@ -51,5 +57,24 @@ func Response(w http.ResponseWriter, status int, body interface{}) {
 }
 
 func UserUUID(r *http.Request) uuid.UUID {
-	return uuid.UUID{}
+	auth := r.Header.Get("Authorization")
+	n := len(bearerPrefix)
+	cookieValue := auth[n:]
+
+	token, err := jwt.ParseWithClaims(cookieValue,
+		&models.Token{}, func(token *jwt.Token) (interface{}, error) {
+			if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
+				return nil, fmt.Errorf("unexpected signing method")
+			}
+			SecretKey, _ := os.LookupEnv("SECRET")
+			return []byte(SecretKey), nil
+		})
+
+	if err != nil {
+		return uuid.UUID{}
+	}
+
+	tk := token.Claims.(*models.Token)
+	log.Print(tk.UserUUID.String())
+	return tk.UserUUID
 }

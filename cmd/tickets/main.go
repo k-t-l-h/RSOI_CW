@@ -50,7 +50,7 @@ func run() error {
 
 	r := mux.NewRouter()
 
-	r.HandleFunc("/api/v1/tickets/{UUID}", handler.GetMyTickets).Methods(http.MethodGet, http.MethodOptions)
+	r.HandleFunc("/api/v1/tickets", handler.GetMyTickets).Methods(http.MethodGet, http.MethodOptions)
 	r.HandleFunc("/api/v1/tickets", handler.BuyTicket).Methods(http.MethodPost, http.MethodOptions)
 	r.HandleFunc("/api/v1/tickets/{UUID}", handler.ReturnTicket).Methods(http.MethodDelete, http.MethodOptions)
 

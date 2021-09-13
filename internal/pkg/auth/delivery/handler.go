@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"github.com/dgrijalva/jwt-go"
 	"github.com/mailru/easyjson"
+	"log"
 	"net/http"
 	"os"
 	"time"
@@ -89,6 +90,13 @@ func (h *AuthHandler) GetToken(w http.ResponseWriter, r *http.Request) {
 }
 
 func (h *AuthHandler) CheckToken(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Access-Control-Allow-Origin", "http://127.0.0.1:8887")
+	w.Header().Set("Access-Control-Allow-Headers", "Authorization, Access-Control-Allow-Origin, Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers")
+	w.Header().Set("Access-Control-Allow-Credentials", "true")
+	if r.Method == http.MethodOptions {
+		return
+	}
+
 	var cookie models.TokenResponse
 	err := json.NewDecoder(r.Body).Decode(&cookie)
 	if err != nil {
@@ -106,6 +114,7 @@ func (h *AuthHandler) CheckToken(w http.ResponseWriter, r *http.Request) {
 			return []byte(SecretKey), nil
 		})
 
+	log.Print(err)
 	if err != nil {
 		middleware.Response(w, models.StatusNoAuth, nil)
 		return
@@ -125,6 +134,13 @@ func (h *AuthHandler) CheckToken(w http.ResponseWriter, r *http.Request) {
 }
 
 func (h *AuthHandler) CheckAdminToken(w http.ResponseWriter, r *http.Request) {
+
+	w.Header().Set("Access-Control-Allow-Origin", "http://127.0.0.1:8887")
+	w.Header().Set("Access-Control-Allow-Headers", "Authorization, Access-Control-Allow-Origin, Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers")
+	w.Header().Set("Access-Control-Allow-Credentials", "true")
+	if r.Method == http.MethodOptions {
+		return
+	}
 
 	var cookie models.TokenResponse
 	err := json.NewDecoder(r.Body).Decode(&cookie)

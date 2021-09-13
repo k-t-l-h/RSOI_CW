@@ -42,6 +42,10 @@ async function seeAllUsers() {
 async function createUserBlock() {
     main = document.getElementById('container')
     main.innerHTML = '';
+    d = document.createElement('div');
+    d.setAttribute("class", "platform");
+    main.appendChild(d);
+    main = d;
 
     d = document.createElement('div');
     d.setAttribute("class", "username");
@@ -81,67 +85,215 @@ async function createUserBlock() {
 }
 
 async function getStatistics() {
-    console.log('Stats')
+    const url = 'http://127.0.0.1:8060/api/v1/reports/flights';
+
+    let response = await fetch(url, {
+        method: 'GET',
+        credentials: 'include',
+        headers: {
+            'Access-Control-Allow-Origin': 'http://127.0.0.1:8887/'
+        },
+    });
+    if (response.ok) {
+        main = document.getElementById('container')
+        main.innerHTML = '';
+        let reports = await response.json();
+        for (let i = 0; i < reports.length; i++) {
+            d = document.createElement('div');
+            d.setAttribute("id", reports[i].id);
+            d.setAttribute("class", "flight-item");
+
+            a = document.createElement('p');
+            a.innerText = reports[i].user_uuid;
+            d.appendChild(a);
+            a = document.createElement('p');
+            a.innerText = reports[i].flights_made;
+            d.appendChild(a);
+            main.appendChild(d);
+
+        }
+
+    } else {
+        addError("Не удалось получить статистику");
+    }
 }
 
 async function getFillingStatistics() {
-    console.log('Stats 2')
+    const url = 'http://127.0.0.1:8060/api/v1/reports/flights-filling';
+
+    let response = await fetch(url, {
+        method: 'GET',
+        credentials: 'include',
+        headers: {
+            'Access-Control-Allow-Origin': 'http://127.0.0.1:8887/'
+        },
+    });
+    if (response.ok) {
+        main = document.getElementById('container')
+        main.innerHTML = '';
+        let reports = await response.json();
+        console.log(reports)
+        for (let i = 0; i < reports.length; i++) {
+            d = document.createElement('div');
+            d.setAttribute("id", reports[i].id);
+            d.setAttribute("class", "flight-item");
+
+            a = document.createElement('p');
+            a.innerText = reports[i].flight_uuid;
+            d.appendChild(a);
+            a = document.createElement('p');
+            a.innerText = reports[i].tickets;
+            d.appendChild(a);
+            main.appendChild(d);
+
+        }
+
+    } else {
+        addError("Не удалось получить статистику");
+    }
 }
 
 async function addFlightBlock() {
     main = document.getElementById('container')
     main.innerHTML = '';
-
-    //TODO: добавить id
     d = document.createElement('div');
+    d.setAttribute("class", "platform");
+    main.appendChild(d);
+    main = d;
 
+    d = document.createElement('div');
+    d.setAttribute("class", "username");
     inputfield = document.createElement('input');
     inputfield.setAttribute("type", "text");
-    inputfield.setAttribute("id", "from");
+    inputfield.setAttribute("id", "from-id");
     inputfield.setAttribute("class", "user-input");
-    inputfield.setAttribute("placeholder", "Откуда");
+    inputfield.setAttribute("placeholder", "id точки отправления");
     d.appendChild(inputfield);
+    main.appendChild(d);
 
-
+    d = document.createElement('div');
+    d.setAttribute("class", "username");
     inputfield = document.createElement('input');
     inputfield.setAttribute("type", "text");
-    inputfield.setAttribute("id", "to");
+    inputfield.setAttribute("id", "from-city");
     inputfield.setAttribute("class", "user-input");
-    inputfield.setAttribute("placeholder", "Куда");
+    inputfield.setAttribute("placeholder", "Город точки отправления");
     d.appendChild(inputfield);
+    main.appendChild(d);
 
+    d = document.createElement('div');
+    d.setAttribute("class", "username");
+    inputfield = document.createElement('input');
+    inputfield.setAttribute("type", "text");
+    inputfield.setAttribute("id", "to-id");
+    inputfield.setAttribute("class", "user-input");
+    inputfield.setAttribute("placeholder", "id точки цели");
+    d.appendChild(inputfield);
+    main.appendChild(d);
+
+    d = document.createElement('div');
+    d.setAttribute("class", "username");
+    inputfield = document.createElement('input');
+    inputfield.setAttribute("type", "text");
+    inputfield.setAttribute("id", "to-city");
+    inputfield.setAttribute("class", "user-input");
+    inputfield.setAttribute("placeholder", "Город точки цели");
+    d.appendChild(inputfield);
+    main.appendChild(d);
+
+    d = document.createElement('div');
+    d.setAttribute("class", "username");
     inputfield = document.createElement('input');
     inputfield.setAttribute("type", "date");
     inputfield.setAttribute("id", "date");
-    inputfield.setAttribute("placeholder", "Когда");
+    inputfield.setAttribute("class", "user-input");
     d.appendChild(inputfield);
-
-    inputfield = document.createElement('input');
-    inputfield.setAttribute("type", "text");
-    inputfield.setAttribute("id", "tickets");
-    inputfield.setAttribute("placeholder", "Сколько билетов");
-    d.appendChild(inputfield);
-
     main.appendChild(d);
+
+    d = document.createElement('button');
+    d.setAttribute("class", "signin-button");
+    d.setAttribute('onclick', 'AddFlight()');
+    d.innerText = 'Создать';
+    main.appendChild(d);
+}
+
+function ShowBuyBytton() {
+    if (localStorage.getItem("token") != null) {
+        return true;
+    }
+    return false;
 }
 
 async function addFlightPatchBlock() {
     main = document.getElementById('container')
     main.innerHTML = '';
+    d = document.createElement('div');
+    d.setAttribute("class", "platform");
+    main.appendChild(d);
+    main = d;
 
     d = document.createElement('div');
-
+    d.setAttribute("class", "username");
     inputfield = document.createElement('input');
     inputfield.setAttribute("type", "text");
     inputfield.setAttribute("id", "flight-id");
     inputfield.setAttribute("class", "user-input");
-    inputfield.setAttribute("placeholder", "Откуда");
+    inputfield.setAttribute("placeholder", "id рейса");
     d.appendChild(inputfield);
+    main.appendChild(d);
 
-    b = document.createElement('button');
-    b.setAttribute("class", "signin-button");
-    b.setAttribute('onclick', 'ShowOneFlightPatch()');
-    b.innerText = 'Найти';
-    d.appendChild(b);
+    d = document.createElement('div');
+    d.setAttribute("class", "username");
+    inputfield = document.createElement('input');
+    inputfield.setAttribute("type", "text");
+    inputfield.setAttribute("id", "from-id");
+    inputfield.setAttribute("class", "user-input");
+    inputfield.setAttribute("placeholder", "id точки отправления");
+    d.appendChild(inputfield);
+    main.appendChild(d);
+
+    d = document.createElement('div');
+    d.setAttribute("class", "username");
+    inputfield = document.createElement('input');
+    inputfield.setAttribute("type", "text");
+    inputfield.setAttribute("id", "from-city");
+    inputfield.setAttribute("class", "user-input");
+    inputfield.setAttribute("placeholder", "Город точки отправления");
+    d.appendChild(inputfield);
+    main.appendChild(d);
+
+    d = document.createElement('div');
+    d.setAttribute("class", "username");
+    inputfield = document.createElement('input');
+    inputfield.setAttribute("type", "text");
+    inputfield.setAttribute("id", "to-id");
+    inputfield.setAttribute("class", "user-input");
+    inputfield.setAttribute("placeholder", "id точки цели");
+    d.appendChild(inputfield);
+    main.appendChild(d);
+
+    d = document.createElement('div');
+    d.setAttribute("class", "username");
+    inputfield = document.createElement('input');
+    inputfield.setAttribute("type", "text");
+    inputfield.setAttribute("id", "to-city");
+    inputfield.setAttribute("class", "user-input");
+    inputfield.setAttribute("placeholder", "Город точки цели");
+    d.appendChild(inputfield);
+    main.appendChild(d);
+
+    d = document.createElement('div');
+    d.setAttribute("class", "username");
+    inputfield = document.createElement('input');
+    inputfield.setAttribute("type", "date");
+    inputfield.setAttribute("id", "date");
+    inputfield.setAttribute("class", "user-input");
+    d.appendChild(inputfield);
+    main.appendChild(d);
+
+    d = document.createElement('button');
+    d.setAttribute("class", "signin-button");
+    d.setAttribute('onclick', 'PatchFlight()');
+    d.innerText = 'Изменить рейс';
     main.appendChild(d);
 }
