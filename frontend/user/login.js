@@ -1,7 +1,7 @@
 async function login() {
    let user = document.getElementById("username").value;
    let user_pass = document.getElementById("password").value;
-   const url = 'http://127.0.0.1:8010/api/v1/auth';
+   const url = defaultAddr + ':8010/api/v1/auth';
 
    let auth = user +':' + user_pass;
    let response = await fetch(url, {
@@ -9,7 +9,7 @@ async function login() {
       credentials: 'include',
       headers: {
          'Authorization': `Basic ${(btoa(auth))}`,
-         'Access-Control-Allow-Origin': 'http://127.0.0.1:8887/'
+         'Access-Control-Allow-Origin': defaultOrigin,
       },
    });
    if (response.ok) {
@@ -52,7 +52,7 @@ async function signup() {
    let role = document.getElementById("role").value;
 
 
-      const url = 'http://127.0.0.1:8010/api/v1/users';
+      const url = defaultAddr +':8010/api/v1/users';
       const data = {login: user, password: user_pass, role: role};
 
       let response = await fetch(url, {
@@ -82,7 +82,8 @@ function b64_to_utf8(str) {
 }
 
 async function isAuthed() {
-   const url = 'http://127.0.0.1:8010/api/v1/verify';
+
+   const url = defaultAddr+ ':8010/api/v1/verify';
 
    token = localStorage.getItem('token');
    let response = await fetch(url, {

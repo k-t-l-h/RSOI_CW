@@ -1,8 +1,9 @@
 window.onload = addMenu;
 
-
-const buttons = ["Рейсы", "Аэропорты", "Билеты"];
-const functions = ["ShowAllFlights()", "ShowAllAirports()", ""];
+const defaultAddr = "http://3.67.182.34";
+const defaultOrigin = "http://3.67.182.34:8887";
+const buttons = ["Рейсы", "Аэропорты"];
+const functions = ["ShowAllFlights()", "ShowAllAirports()"];
 async function addMenu() {
     main = document.getElementById('main')
     main.innerHTML = '';
@@ -17,15 +18,14 @@ async function addMenu() {
         d.appendChild(a);
     }
 
-
-        let admin = await CheckAdmin();
-        if (admin === true) {
-            a = document.createElement('a');
-            a.innerText = 'Админка';
-            a.setAttribute('id', 'admin');
-            a.setAttribute('onclick', 'addAdminBlock()');
-            d.appendChild(a);
-        }
+    let admin = await CheckAdmin();
+    if (admin === true) {
+        a = document.createElement('a');
+        a.innerText = 'Админка';
+        a.setAttribute('id', 'admin');
+        a.setAttribute('onclick', 'addAdminBlock()');
+        d.appendChild(a);
+    }
 
 
     let check = await isAuthed();

@@ -3,6 +3,7 @@ package main
 import (
 	"RSOI_CW/internal/pkg/auth/delivery"
 	"RSOI_CW/internal/pkg/auth/repo"
+	"RSOI_CW/internal/pkg/middleware"
 	"context"
 	"errors"
 	"fmt"
@@ -49,6 +50,7 @@ func run() error {
 	handler := delivery.NewAuthHandler(repo)
 
 	r := mux.NewRouter()
+	r.Use(middleware.Cors)
 
 	//Авторизация.
 	//header: Authorization: basic(<login>:<password>)
