@@ -13,8 +13,6 @@ services:
     ports:
       - "5672:5672"
   auth:
-    links:
-      - database
     expose:
       - "8010"
     ports:
@@ -22,48 +20,36 @@ services:
     image: docker.io/ktlh/auth
   airport:
     restart: on-failure
-    links:
-      - database
     expose:
       - "8020"
     ports:
       - "8020:8020"
     image: docker.io/ktlh/airport
   bonus:
-    links:
-      - database
     expose:
       - "8050"
     ports:
       - "8050:8050"
     image: docker.io/ktlh/bonus
   flight:
-    links:
-      - database
     expose:
       - "8030"
     ports:
       - "8030:8030"
     image: docker.io/ktlh/flight
   gateway:
-    links:
-      - database
     expose:
       - "8000"
     ports:
       - "8000:8000"
     image: docker.io/ktlh/gateway
   reports:
-    links:
-      - database
     expose:
       - "8060"
     ports:
       - "8060:8060"
     image: docker.io/ktlh/reports
   tickets:
-    links:
-      - database
     expose:
       - "8040"
     ports:
