@@ -13,6 +13,7 @@ services:
       dockerfile: ./build/frontend.Dockerfile
     ports:
       - "8887:8887"
+    image: ktlh/frontend
   rabbit:
     restart: on-failure
     image: rabbitmq
