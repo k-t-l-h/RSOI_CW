@@ -20,22 +20,22 @@ async function seeAllUsers() {
             d.setAttribute("class", "ticket-item");
 
             link = document.createElement('p');
-            link.innerText = airports[i].id;
+            link.innerText = 'ID пользователя' + airports[i].id;
             d.appendChild(link);
 
             link = document.createElement('p');
-            link.innerText = airports[i].login;
+            link.innerText = 'Логин пользователя' +  airports[i].login;
             d.appendChild(link);
 
             link = document.createElement('p');
-            link.innerText = airports[i].role;
+            link.innerText = 'Роль пользователя' +  airports[i].role;
             d.appendChild(link);
 
             main.appendChild(d);
         }
 
     } else {
-        console.log("Ошибка HTTP: " + response.status);
+        addError("Возникла ошибка");
     }
 }
 
@@ -104,10 +104,10 @@ async function getStatistics() {
             d.setAttribute("class", "flight-item");
 
             a = document.createElement('p');
-            a.innerText = reports[i].user_uuid;
+            a.innerText = 'ID пользователя: ' + reports[i].user_uuid;
             d.appendChild(a);
             a = document.createElement('p');
-            a.innerText = reports[i].flights_made;
+            a.innerText = 'Совершенно перелетов: ' + reports[i].flights_made;
             d.appendChild(a);
             main.appendChild(d);
 
@@ -139,10 +139,10 @@ async function getFillingStatistics() {
             d.setAttribute("class", "flight-item");
 
             a = document.createElement('p');
-            a.innerText = reports[i].flight_uuid;
+            a.innerText = 'ID полета: ' +reports[i].flight_uuid;
             d.appendChild(a);
             a = document.createElement('p');
-            a.innerText = reports[i].tickets;
+            a.innerText = 'Билетов куплено: : ' + reports[i].tickets;
             d.appendChild(a);
             main.appendChild(d);
 

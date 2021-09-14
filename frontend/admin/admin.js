@@ -1,5 +1,4 @@
 async function CheckAdmin() {
-
         const url = 'http://127.0.0.1:8010/api/v1/admin';
         let token = localStorage.getItem('token');
 
@@ -7,7 +6,7 @@ async function CheckAdmin() {
             method: 'POST',
             credentials: 'same-origin',
             headers: {
-                'Access-Control-Allow-Origin': 'http://127.0.0.1:8887/'
+                'Access-Control-Allow-Origin': defaultOrigin,
             },
             body: JSON.stringify({token: token})
         });
@@ -47,13 +46,13 @@ function addAdminBlock() {
     main.appendChild(d);
 
     d = document.createElement('div');
-    d.innerText = 'Посмотреть статистику';
+    d.innerText = 'Посмотреть статистику по пользователям';
     d.setAttribute("class", "airport-items");
     d.setAttribute('onclick', 'getStatistics()');
     main.appendChild(d);
 
     d = document.createElement('div');
-    d.innerText = 'Посмотреть статистику 2';
+    d.innerText = 'Посмотреть статистику по полетам';
     d.setAttribute("class", "airport-items");
     d.setAttribute('onclick', 'getFillingStatistics()');
     main.appendChild(d);

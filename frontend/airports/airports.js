@@ -22,10 +22,10 @@ async function ShowAllAirports() {
             d.setAttribute("class", "airport-items");
 
             link = document.createElement('a');
-            link.innerText = airports[i].id;
+            link.innerText = 'ID аэропорта: ' + airports[i].id;
             link.setAttribute('onclick', 'ShowAirport("'+airports[i].id.toString()+'")');
             namef = document.createElement('p');
-            namef.innerText = airports[i].name;
+            namef.innerText = 'Название: ' + airports[i].name;
 
             d.appendChild(link);
             d.appendChild(namef);
@@ -59,13 +59,13 @@ async function ShowAirport(id) {
             d.setAttribute("class", "airport-item");
 
             link = document.createElement('a');
-            link.innerText = airports.id;
+            link.innerText = 'ID аэропорта: ' + airports.id;
             namef = document.createElement('p');
-            namef.innerText = airports.name;
+            namef.innerText = 'Название: ' + airports.name;
             city = document.createElement('p');
-            city.innerText = airports.city;
+            city.innerText = 'Город аэропорта: ' + airports.city;
             description = document.createElement('p');
-            description.innerText = airports.description;
+            description.innerText = 'Описание: ' +airports.description;
 
             d.appendChild(link);
             d.appendChild(namef);

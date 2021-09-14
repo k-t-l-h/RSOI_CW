@@ -24,7 +24,8 @@ func Response(w http.ResponseWriter, status int, body interface{}) {
 	case models.StatusOkey:
 		w.WriteHeader(http.StatusOK)
 		if body != nil {
-			jsn, _ := json.Marshal(body)
+			jsn, err := json.Marshal(body)
+			log.Print(err)
 			_, _ = w.Write(jsn)
 		}
 	case models.StatusBadUUID:

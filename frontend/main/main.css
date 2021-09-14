@@ -1,6 +1,6 @@
 #navbar {
     overflow: hidden;
-    background-color: #2E6788;
+    background-color: #7c525f;
 }
 
 #navbar a {
@@ -12,21 +12,26 @@
     text-decoration: none;
 }
 
+#navbar a:hover {
+    float: left;
+    display: block;
+    color: #f2f2f2;
+    text-align: center;
+    padding: 14px;
+    text-decoration-line: underline;
+}
+
+
 .sticky {
     position: fixed;
     top: 0;
     width: 100%;
-}
-
-.sticky  {
     padding-top: 60px;
 }
 
 form {
     padding: 20px;
     margin: 30px;
-    border: #333333 1px;
-    border-style: dotted;
     border-radius: 4%;
     justify-content: center;
 }
@@ -48,8 +53,23 @@ body {
 
 .airport-items {
     display: inline-block;
+    min-width: 300px;
+    max-width: 45%;
     border-radius: 50px;
     background: #e0e0e0;
+    box-shadow:  8px 8px 5px #bebebe,
+    -8px -8px 5px #ffffff;
+    margin-top: 20px;
+    margin-left:20px;
+    margin-right: 20px;
+    padding: 30px;
+}
+
+.airport-items:hover {
+    cursor: pointer;
+    display: inline-block;
+    border-radius: 50px;
+    background: #cec3c3;
     box-shadow:  8px 8px 5px #bebebe,
     -8px -8px 5px #ffffff;
     margin-top: 20px;
@@ -61,6 +81,8 @@ body {
 .airport-item {
     display: block;
     border-radius: 50px;
+    min-width: 300px;
+    max-width: 45%;
     background: #e0e0e0;
     box-shadow:  8px 8px 5px #bebebe,
     -8px -8px 5px #ffffff;
@@ -74,6 +96,8 @@ body {
     display: block;
     border-radius: 50px;
     background: #e0e0e0;
+    min-width: 300px;
+    max-width: 45%;
     box-shadow:  8px 8px 5px #bebebe,
     -8px -8px 5px #ffffff;
     margin-top: 20px;
@@ -94,13 +118,12 @@ body {
 }
 
 .btn {
+    margin-outside: 30px;
     display: inline-block;
     padding-left: 30px;
     padding-right: 30px;
     border-radius: 27px;
-    background: #8ac1b4;
-    box-shadow:  9px 9px 17px #6c978c,
-    -9px -9px 17px #a8ebdc;
+    background: linear-gradient(145deg, #7c525f, #8F5768FF);
 }
 
 .platform {
@@ -110,6 +133,10 @@ body {
     background: #e0e0e0;
     box-shadow:  20px 20px 35px #bebebe,
     -20px -20px 35px #ffffff;
+    width: max-content;
+    margin-left: auto;
+    margin-right: auto;
+
 
 }
 
@@ -125,4 +152,20 @@ body {
     border-radius: 50px;
     width: 100%;
     color: #2E6788;
+}
+
+.signin-button {
+    outline: none;
+    border:none;
+    cursor: pointer;
+    width:100%;
+    padding: 5%;
+    font-family: 'Lato', sans-serif;
+    border-radius: 50px;
+    background: linear-gradient(145deg, #7c525f, #8F5768FF);
+    max-height: 35px;
+    justify-content: center;
+    max-width: 300px;
+    text-align: center;
+    margin-top: 20px;
 }

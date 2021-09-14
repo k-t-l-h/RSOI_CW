@@ -47,6 +47,8 @@ func (h *AuthHandler) GetAllUsers(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	users, status := h.repo.GetUsers()
+	b, e := json.Marshal(users)
+	log.Print(b, e)
 	middleware.Response(w, status, users)
 }
 

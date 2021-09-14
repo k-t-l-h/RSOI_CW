@@ -16,26 +16,25 @@ async function ShowAllFlights() {
         main = document.getElementById('container')
         main.innerHTML = '';
         let body = await response.json();
-        console.log(body);
         for (let i = 0; i < body.length; i++) {
             d = document.createElement('div');
             d.setAttribute("id", body[i].id);
             d.setAttribute("class", "flight-item");
 
             a = document.createElement('p');
-            a.innerText = body[i].from_city;
+            a.innerText = 'Город отправления: ' + body[i].from_city;
             a.setAttribute("id", body[i].from);
             //a.setAttribute('onclick', 'ShowOneFlight("' +body[i].from + '")')
             d.appendChild(a);
 
             a = document.createElement('p');
-            a.innerText = body[i].to_city;
+            a.innerText = 'Город прибытия: ' + body[i].to_city;
             a.setAttribute("id", body[i].to);
             //a.setAttribute('onclick', 'ShowOneFlight("' +body[i].to + '")');
             d.appendChild(a);
 
             a = document.createElement('p');
-            a.innerText = body[i].date;
+            a.innerText = 'Дата вылета: ' + body[i].date.slice(0, 11);
             d.appendChild(a);
 
             if (ShowBuyBytton() === true) {
@@ -50,7 +49,7 @@ async function ShowAllFlights() {
         }
 
     } else {
-        console.log("Ошибка Билетов HTTP: " + response.status);
+        addError('Рейсы не доступны');
     }
 
 }

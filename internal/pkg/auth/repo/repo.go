@@ -17,8 +17,8 @@ func NewAuthRepo(pool pgxpool.Pool) *AuthRepo {
 }
 
 func (r *AuthRepo) GetUser(login string, password string) (models.User, int) {
-	SelectUser := "\nSELECT \"UserUUID\", \"Login\", \"Role\" " +
-		"FROM public.auth WHERE  \"Login\" = $1 AND \"Password\" = md5($2);"
+	SelectUser := "SELECT \"UserUUID\", \"Login\", \"Role\" " +
+		"FROM auth WHERE  \"Login\" = $1 AND \"Password\" = md5($2);"
 	user := models.User{}
 
 	row := r.pool.QueryRow(context.Background(), SelectUser, login, password)
@@ -33,12 +33,13 @@ func (r *AuthRepo) GetUser(login string, password string) (models.User, int) {
 }
 
 func (r *AuthRepo) GetUsers() ([]models.User, int) {
-	SelectUser := "\nSELECT \"UserUUID\", \"Login\", \"Role\" FROM public.auth;"
+	SelectUser := "SELECT \"UserUUID\", \"Login\", \"Role\" FROM auth;"
 
 	result := []models.User{}
 
 	rows, err := r.pool.Query(context.Background(), SelectUser)
 	if err != nil {
+		log.Print(err)
 		return []models.User{}, models.StatusError
 	}
 
@@ -46,6 +47,7 @@ func (r *AuthRepo) GetUsers() ([]models.User, int) {
 		user := models.User{}
 		err = rows.Scan(&user.UUID, &user.Login, &user.Role)
 		if err != nil {
+			log.Print(err)
 			return []models.User{}, models.StatusError
 		}
 		result = append(result, user)
