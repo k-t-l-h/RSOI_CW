@@ -3,7 +3,7 @@ version: "3.3"
 services:
   database:
     hostname: database
-    image: docker.io/ktlh/database
+    image: postgres
   frontend:
     hostname: frontend
     image: docker.io/ktlh/frontend
