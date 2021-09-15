@@ -1,6 +1,7 @@
 package main
 
 import (
+	"RSOI_CW/internal/pkg/middleware"
 	"RSOI_CW/internal/pkg/tickets/delivery"
 	"RSOI_CW/internal/pkg/tickets/repo"
 	"context"
@@ -49,6 +50,7 @@ func run() error {
 	handler := delivery.NewTicketHandler(rp)
 
 	r := mux.NewRouter()
+	r.Use(middleware.Cors)
 
 	r.HandleFunc("/api/v1/tickets", handler.GetMyTickets).Methods(http.MethodGet, http.MethodOptions)
 	r.HandleFunc("/api/v1/tickets", handler.BuyTicket).Methods(http.MethodPost, http.MethodOptions)

@@ -19,13 +19,7 @@ func NewAirportHandler(repo airport.IRepo) *AirportHandler {
 
 //GET /airports/{airportUid}
 func (h *AirportHandler) GetAirport(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Access-Control-Allow-Origin", "*")
-	w.Header().Set("Access-Control-Allow-Headers", "*")
-	if r.Method == http.MethodOptions {
-		return
-	}
-
-	vars := mux.Vars(r)
+		vars := mux.Vars(r)
 	uuids, _ := vars["UUID"]
 	id, err := uuid.Parse(uuids)
 	if err != nil {
@@ -39,11 +33,6 @@ func (h *AirportHandler) GetAirport(w http.ResponseWriter, r *http.Request) {
 
 //GET /airports
 func (h *AirportHandler) GetAirports(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Access-Control-Allow-Origin", "*")
-	w.Header().Set("Access-Control-Allow-Headers", "*")
-	if r.Method == http.MethodOptions {
-		return
-	}
 
 	selectAirports, state := h.repo.SelectAirports()
 	middleware.Response(w, state, selectAirports)

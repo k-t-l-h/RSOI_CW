@@ -3,6 +3,7 @@ package main
 import (
 	"RSOI_CW/internal/pkg/bonus/delivery"
 	"RSOI_CW/internal/pkg/bonus/repo"
+	"RSOI_CW/internal/pkg/middleware"
 	"context"
 	"errors"
 	"fmt"
@@ -49,6 +50,7 @@ func run() error {
 	handler := delivery.NewBonusHandler(rp)
 
 	r := mux.NewRouter()
+	r.Use(middleware.Cors)
 
 	r.HandleFunc("/api/v1/miles", handler.GetBonus).Methods(http.MethodGet, http.MethodOptions)
 	r.HandleFunc("/api/v1/miles", handler.AddBonus).Methods(http.MethodPost, http.MethodOptions)

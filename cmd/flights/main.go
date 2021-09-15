@@ -3,6 +3,7 @@ package main
 import (
 	"RSOI_CW/internal/pkg/flights/delivery"
 	"RSOI_CW/internal/pkg/flights/repo"
+	"RSOI_CW/internal/pkg/middleware"
 	"context"
 	"errors"
 	"fmt"
@@ -49,6 +50,7 @@ func run() error {
 	handler := delivery.NewFlightHandler(rp)
 
 	r := mux.NewRouter()
+	r.Use(middleware.Cors)
 
 	r.HandleFunc("/api/v1/flights", handler.AllFlights).Methods(http.MethodGet, http.MethodOptions)
 	r.HandleFunc("/api/v1/flights", handler.AddFlight).Methods(http.MethodPost, http.MethodOptions)

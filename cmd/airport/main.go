@@ -3,6 +3,7 @@ package main
 import (
 	"RSOI_CW/internal/pkg/airport/delivery"
 	"RSOI_CW/internal/pkg/airport/repo"
+	"RSOI_CW/internal/pkg/middleware"
 	"context"
 	"errors"
 	"fmt"
@@ -49,7 +50,7 @@ func run() error {
 	handler := delivery.NewAirportHandler(repo)
 
 	r := mux.NewRouter()
-
+	r.Use(middleware.Cors)
 	//GET /airports/{airportUid}
 	r.HandleFunc("/api/v1/airports/{UUID}",
 		handler.GetAirport).Methods(http.MethodGet, http.MethodOptions)

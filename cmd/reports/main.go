@@ -1,6 +1,7 @@
 package main
 
 import (
+	"RSOI_CW/internal/pkg/middleware"
 	"RSOI_CW/internal/pkg/report/delivery"
 	"RSOI_CW/internal/pkg/report/repo"
 	"context"
@@ -49,6 +50,7 @@ func run() error {
 	handler := delivery.NewReportHandler(rp)
 
 	r := mux.NewRouter()
+	r.Use(middleware.Cors)
 
 	r.HandleFunc("/api/v1/reports/flights",
 		handler.CheckByUsers).Methods(http.MethodGet, http.MethodOptions)

@@ -17,15 +17,6 @@ func NewBonusHandler(repo bonus.IRepo) *BonusHandler {
 
 //получение бонусного баланса
 func (h *BonusHandler) GetBonus(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Access-Control-Allow-Origin", "http://127.0.0.1:8887")
-	w.Header().Set("Access-Control-Allow-Headers", "Authorization, Access-Control-Allow-Origin, Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers")
-	w.Header().Set("Access-Control-Allow-Credentials", "true")
-	w.Header().Set("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, DELETE")
-
-	if r.Method == http.MethodOptions {
-		return
-	}
-
 	id := middleware.UserUUID(r)
 	balance, status := h.repo.GetBonus(id)
 	bonus := models.Bonus{
@@ -38,15 +29,6 @@ func (h *BonusHandler) GetBonus(w http.ResponseWriter, r *http.Request) {
 //изменение бонусной программы
 //здесь должен быть idПолета, чтобы было окей
 func (h *BonusHandler) AddBonus(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Access-Control-Allow-Origin", "http://127.0.0.1:8887")
-	w.Header().Set("Access-Control-Allow-Headers", "Authorization, Access-Control-Allow-Origin, Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers")
-	w.Header().Set("Access-Control-Allow-Credentials", "true")
-	w.Header().Set("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, DELETE")
-
-	if r.Method == http.MethodOptions {
-		return
-	}
-
 	userUUID := middleware.UserUUID(r)
 	_, status := h.repo.SetBonus(userUUID, 1)
 	middleware.Response(w, status, nil)
@@ -54,14 +36,6 @@ func (h *BonusHandler) AddBonus(w http.ResponseWriter, r *http.Request) {
 }
 
 func (h *BonusHandler) NewBonusUser(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Access-Control-Allow-Origin", "http://127.0.0.1:8887")
-	w.Header().Set("Access-Control-Allow-Headers", "Authorization, Access-Control-Allow-Origin, Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers")
-	w.Header().Set("Access-Control-Allow-Credentials", "true")
-	w.Header().Set("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, DELETE")
-
-	if r.Method == http.MethodOptions {
-		return
-	}
 
 	userUUID := middleware.UserUUID(r)
 	status := h.repo.CreateBonus(userUUID)
