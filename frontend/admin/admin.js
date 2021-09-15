@@ -11,8 +11,6 @@ async function CheckAdmin() {
             body: JSON.stringify({token: token})
         });
         return response.ok;
-
-
 }
 
 function addAdminBlock() {

@@ -28,6 +28,8 @@ function addUserBlock() {
 
 
 function addLoginBlock() {
+
+    navigate('/login');
     main = document.getElementById('container')
     main.innerHTML = '';
     d = document.createElement('div');

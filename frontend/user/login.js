@@ -21,9 +21,6 @@ async function login() {
       b1 = document.getElementById('login');
       b1.parentNode.removeChild(b1);
 
-      b1 = document.getElementById('signup');
-      b1.parentNode.removeChild(b1);
-
       d = document.getElementById('navbar');
 
       let admin = await CheckAdmin();

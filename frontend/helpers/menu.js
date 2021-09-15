@@ -1,7 +1,7 @@
 window.onload = addMenu;
 
-const defaultAddr = "http://127.0.0.1"//"http://3.67.182.34";
-const defaultOrigin = "http://127.0.0.1:8887" //"http://3.67.182.34:8887";
+const defaultAddr = "http://3.67.182.34"; //"http://127.0.0.1"//
+const defaultOrigin = "http://3.67.182.34:8887"; //"http://127.0.0.1:8887" //
 const buttons = ["Рейсы", "Аэропорты"];
 const functions = ["ShowAllFlights()", "ShowAllAirports()"];
 async function addMenu() {
@@ -17,19 +17,6 @@ async function addMenu() {
         a.innerText = buttons[i];
         d.appendChild(a);
     }
-
-    let admin = await CheckAdmin();
-    if (admin === true) {
-        a = document.getElementById('admin')
-        if (a === null) {
-        a = document.createElement('a');
-        a.innerText = 'Админка';
-        a.setAttribute('id', 'admin');
-        a.setAttribute('onclick', 'addAdminBlock()');
-        d.appendChild(a);
-        }
-    }
-
 
     let check = await isAuthed();
     if (check === false) {
@@ -63,12 +50,14 @@ function navigate(path) {
 }
 
 window.onpopstate = function (event) {
+    event.preventDefault();
     state = event.state === null? 'state' : event.state;
+
     render(state);
 };
 
+
 function render(state) {
-    console.log(state);
     switch (state) {
         case '/user':
             addUserBlock();
