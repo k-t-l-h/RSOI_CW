@@ -14,13 +14,13 @@ function addUserBlock() {
     a = document.createElement('div');
     a.innerText = 'Посмотреть билеты';
     a.setAttribute('onclick', 'GetMyTickets("b1b0b38c43f24cce8ccff4b1e343903c")')
-    a.setAttribute("class", "btn");
+    a.setAttribute("class", "signin-button ");
     d.appendChild(a);
 
     a = document.createElement('div');
-    a.innerText = 'Посмотреть баланс бонусной программы';
+    a.innerText = 'Посмотреть бонусы';
     a.setAttribute('onclick', 'GetMyBonus()')
-    a.setAttribute("class", "btn");
+    a.setAttribute("class", "signin-button ");
     d.appendChild(a);
 
     main.appendChild(d);

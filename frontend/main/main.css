@@ -37,10 +37,10 @@ form {
 }
 
 .ticket-item {
-    border-radius: 50px;
-    background: #c4b2cb;
+    border-radius: 4%;
+    background: #ccb7b7;
     box-shadow:  6px 6px 11px #a59ea8,
-    -6px -6px 11px #fff6ff;
+    -6px -6px 11px #cbb5bd;
     margin-top: 20px;
     margin-left:20px;
     margin-right: 20px;
@@ -158,8 +158,8 @@ body {
     outline: none;
     border:none;
     cursor: pointer;
-    width:100%;
-    padding: 5%;
+    min-width:100px;
+    padding: 5px;
     font-family: 'Lato', sans-serif;
     border-radius: 50px;
     background: linear-gradient(145deg, #7c525f, #8F5768FF);

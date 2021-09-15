@@ -17,18 +17,18 @@ async function seeAllUsers() {
         for (let i = 0; i < airports.length; i++) {
             d = document.createElement('div');
             d.setAttribute("id", airports[i].id);
-            d.setAttribute("class", "ticket-item");
+            d.setAttribute("class", "user-item ");
 
             link = document.createElement('p');
-            link.innerText = 'ID пользователя' + airports[i].id;
+            link.innerText = 'ID пользователя: ' + airports[i].id;
             d.appendChild(link);
 
             link = document.createElement('p');
-            link.innerText = 'Логин пользователя' +  airports[i].login;
+            link.innerText = 'Логин пользователя: ' +  airports[i].login;
             d.appendChild(link);
 
             link = document.createElement('p');
-            link.innerText = 'Роль пользователя' +  airports[i].role;
+            link.innerText = 'Роль пользователя: ' +  airports[i].role;
             d.appendChild(link);
 
             main.appendChild(d);
@@ -217,8 +217,9 @@ async function addFlightBlock() {
     main.appendChild(d);
 }
 
-function ShowBuyBytton() {
-    if (localStorage.getItem("token") != null) {
+function ShowBuyButton() {
+    let token = localStorage.getItem("token");
+    if (token !== null || token != "") {
         return true;
     }
     return false;

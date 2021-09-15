@@ -17,6 +17,11 @@ app.get('/', function(req, res) {
     res.sendFile("main.html", { root: path.join(__dirname, '/main' ) });
 });
 
+app.get('/main/icon.png', function(req, res) {
+    res.sendFile("icon.png", { root: path.join(__dirname, '/main' ) });
+});
+
+
 app.get('/main.css', function(req, res) {
     res.sendFile("main.css", { root: path.join(__dirname, '/main' ) });
 });

@@ -94,7 +94,7 @@ func (r *TicketRepo) DeleteTicket(uuid uuid.UUID) int {
 
 func (r *TicketRepo) CreateTicket(ticket models.Ticket) int {
 	InsertTicket := "INSERT INTO public.ticket(\"TicketUUID\", \"FlightUUID\", \"UserUUID\"," +
-		",  \"Date\" ) " +
+		" \"Date\" ) " +
 		" VALUES ($1, $2, $3, $4);"
 
 	ticket.TicketUUID = uuid.New()

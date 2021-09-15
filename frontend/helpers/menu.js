@@ -34,14 +34,9 @@ async function addMenu() {
     let check = await isAuthed();
     if (check === false) {
         a = document.createElement('a');
-        a.innerText = 'Login';
+        a.innerText = 'Вход';
         a.setAttribute('id', 'login');
         a.setAttribute('onclick', 'addLoginBlock()');
-        d.appendChild(a);
-        a = document.createElement('a');
-        a.innerText = 'Sign Up';
-        a.setAttribute('id', 'signup');
-        a.setAttribute('onclick', 'addSignUpBlock()');
         d.appendChild(a);
     } else {
         a = document.createElement('a');

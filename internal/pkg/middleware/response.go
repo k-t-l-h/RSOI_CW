@@ -76,6 +76,5 @@ func UserUUID(r *http.Request) uuid.UUID {
 	}
 
 	tk := token.Claims.(*models.Token)
-	log.Print(tk.UserUUID.String())
 	return tk.UserUUID
 }

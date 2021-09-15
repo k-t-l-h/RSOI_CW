@@ -28,7 +28,7 @@ async function GetMyBonus() {
         d = document.createElement('div');
         d.setAttribute("class", "ticket-item");
         id = document.createElement('p');
-        id.innerText = bonus.balance;
+        id.innerText = 'Доступно бонусов: ' + bonus.balance;
 
         d.appendChild(id);
         main.appendChild(d);
