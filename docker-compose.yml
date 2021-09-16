@@ -33,6 +33,13 @@ services:
     ports:
       - "8010:8010"
     image: ktlh/auth
+    deploy:
+      mode: replicated
+      replicas: 2
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        window: 30s
   airport:
     restart: on-failure
     build:
@@ -47,6 +54,13 @@ services:
     ports:
       - "8020:8020"
     image: ktlh/airport
+    deploy:
+      mode: replicated
+      replicas: 2
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        window: 30s
   bonus:
     build:
       context: .
@@ -60,6 +74,13 @@ services:
     ports:
       - "8050:8050"
     image: ktlh/bonus
+    deploy:
+      mode: replicated
+      replicas: 2
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        window: 30s
   flight:
     build:
       context: .
@@ -73,6 +94,13 @@ services:
     ports:
       - "8030:8030"
     image: ktlh/flight
+    deploy:
+      mode: replicated
+      replicas: 2
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        window: 30s
   gateway:
     build:
       context: .
@@ -86,6 +114,13 @@ services:
     ports:
       - "8000:8000"
     image: ktlh/gateway
+    deploy:
+      mode: replicated
+      replicas: 2
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        window: 30s
   reports:
     build:
       context: .
@@ -99,6 +134,13 @@ services:
     ports:
       - "8060:8060"
     image: ktlh/reports
+    deploy:
+      mode: replicated
+      replicas: 2
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        window: 30s
   tickets:
     build:
       context: .
@@ -112,6 +154,13 @@ services:
     ports:
       - "8040:8040"
     image: ktlh/tickets
+    deploy:
+      mode: replicated
+      replicas: 2
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        window: 30s
 
 
 
