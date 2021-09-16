@@ -1,11 +1,11 @@
 async function seeAllUsers() {
-    const url = 'http://127.0.0.1:8010/api/v1/users';
+    const url = 'http://3.67.182.34:8010/api/v1/users';
 
     let response = await fetch(url, {
         method: 'GET',
         credentials: 'include',
         headers: {
-            'Access-Control-Allow-Origin': 'http://127.0.0.1:8887/'
+            'Access-Control-Allow-Origin': 'http://3.67.182.34:8887/'
         },
     });
     if (response.ok) {
@@ -85,13 +85,13 @@ async function createUserBlock() {
 }
 
 async function getStatistics() {
-    const url = 'http://127.0.0.1:8060/api/v1/reports/flights';
+    const url = 'http://3.67.182.34:8060/api/v1/reports/flights';
 
     let response = await fetch(url, {
         method: 'GET',
         credentials: 'include',
         headers: {
-            'Access-Control-Allow-Origin': 'http://127.0.0.1:8887/'
+            'Access-Control-Allow-Origin': 'http://3.67.182.34:8887/'
         },
     });
     if (response.ok) {
@@ -119,13 +119,13 @@ async function getStatistics() {
 }
 
 async function getFillingStatistics() {
-    const url = 'http://127.0.0.1:8060/api/v1/reports/flights-filling';
+    const url = 'http://3.67.182.34:8060/api/v1/reports/flights-filling';
 
     let response = await fetch(url, {
         method: 'GET',
         credentials: 'include',
         headers: {
-            'Access-Control-Allow-Origin': 'http://127.0.0.1:8887/'
+            'Access-Control-Allow-Origin': 'http://3.67.182.34:8887/'
         },
     });
     if (response.ok) {

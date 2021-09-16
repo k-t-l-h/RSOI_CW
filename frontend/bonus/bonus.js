@@ -1,6 +1,6 @@
 //узнать количество бонусов
 async function GetMyBonus() {
-    const url = 'http://127.0.0.1:8050/api/v1/miles';
+    const url = 'http://3.67.182.34:8050/api/v1/miles';
 
     user = localStorage.getItem("token");
 
@@ -9,7 +9,7 @@ async function GetMyBonus() {
         credentials: 'include',
         headers: {
             'Authorization': `Bearer ${user}`,
-            'Access-Control-Allow-Origin': 'http://127.0.0.1:8887'
+            'Access-Control-Allow-Origin': 'http://3.67.182.34:8887'
         },
     });
 
