@@ -59,6 +59,9 @@ func Response(w http.ResponseWriter, status int, body interface{}) {
 
 func UserUUID(r *http.Request) uuid.UUID {
 	auth := r.Header.Get("Authorization")
+	if auth == "" {
+		return uuid.UUID{}
+	}
 	n := len(bearerPrefix)
 	cookieValue := auth[n:]
 

@@ -12,6 +12,7 @@ RUN go mod tidy
 
 COPY .env .
 COPY . .
+RUN  go test internal/...
 RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o auth cmd/flights/main.go
 
 EXPOSE 8030
