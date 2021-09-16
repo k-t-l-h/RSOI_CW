@@ -19,7 +19,7 @@ func NewAirportHandler(repo airport.IRepo) *AirportHandler {
 
 //GET /airports/{airportUid}
 func (h *AirportHandler) GetAirport(w http.ResponseWriter, r *http.Request) {
-		vars := mux.Vars(r)
+	vars := mux.Vars(r)
 	uuids, _ := vars["UUID"]
 	id, err := uuid.Parse(uuids)
 	if err != nil {

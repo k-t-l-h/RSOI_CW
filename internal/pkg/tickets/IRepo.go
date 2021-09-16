@@ -5,6 +5,8 @@ import (
 	"github.com/google/uuid"
 )
 
+//go:generate mockgen -source=IRepo.go -destination=IRepo_mock.go -package=tickets
+
 type IRepo interface {
 	GetAllTickets() ([]models.Ticket, int)
 	GetTickets(uuid uuid.UUID) ([]models.Ticket, int)
