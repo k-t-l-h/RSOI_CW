@@ -78,3 +78,25 @@ func UserUUID(r *http.Request) uuid.UUID {
 	tk := token.Claims.(*models.Token)
 	return tk.UserUUID
 }
+
+func User(r *http.Request) models.Token {
+	auth := r.Header.Get("Authorization")
+	n := len(bearerPrefix)
+	cookieValue := auth[n:]
+
+	token, err := jwt.ParseWithClaims(cookieValue,
+		&models.Token{}, func(token *jwt.Token) (interface{}, error) {
+			if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
+				return nil, fmt.Errorf("unexpected signing method")
+			}
+			SecretKey, _ := os.LookupEnv("SECRET")
+			return []byte(SecretKey), nil
+		})
+
+	if err != nil {
+		return models.Token{}
+	}
+
+	tk := token.Claims.(*models.Token)
+	return *tk
+}

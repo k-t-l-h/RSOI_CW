@@ -4,7 +4,7 @@ import (
 	"net/http"
 )
 
-const defaultOrigin = "http://3.67.182.34:8887"
+const defaultOrigin = "http://127.0.0.1:8887"//"http://3.67.182.34:8887"
 
 func Cors(handler http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {

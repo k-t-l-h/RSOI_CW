@@ -36,8 +36,8 @@ async function ShowAllFlights() {
             a = document.createElement('p');
             a.innerText = 'Дата вылета: ' + body[i].date.slice(0, 11);
             d.appendChild(a);
-
-            if (ShowBuyButton() === true) {
+            let check = await isAuthed();
+            if (check === true) {
                 a = document.createElement('button');
                 a.setAttribute("class", "signin-button");
                 a.setAttribute('onclick', 'ShowBuyBlock("' + body[i].id +'","' +body[i].date +  '")');

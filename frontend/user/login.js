@@ -83,13 +83,16 @@ async function isAuthed() {
    const url = defaultAddr+ ':8010/api/v1/verify';
 
    token = localStorage.getItem('token');
+   if (token == null) {
+      return false;
+   }
    let response = await fetch(url, {
       method: 'POST',
       credentials: 'same-origin',
       headers: {
-         'Access-Control-Allow-Origin': 'http://127.0.0.1:8887/'
-      },
-      body: {token: token},
+         'Access-Control-Allow-Origin': defaultOrigin,
+         'Authorization': `Bearer ${(token)}`
+      }
    });
    return response.ok;
 }

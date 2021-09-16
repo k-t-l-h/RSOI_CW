@@ -76,7 +76,7 @@ func run() error {
 
 	//SG
 	r.HandleFunc("/api/v1/tickets", userHandler.BuyTicket).Methods("POST")
-	r.HandleFunc("/api/v1/tickets", userHandler.DeleteTicket).Methods("DELETE")
+	r.HandleFunc("/api/v1/tickets/{UUID}", userHandler.DeleteTicket).Methods("DELETE")
 	r.HandleFunc("/api/v1/miles", userHandler.GetMiles).Methods("GET")
 	r.HandleFunc("/api/v1/tickets", userHandler.GetTickets).Methods("GET")
 
@@ -86,7 +86,7 @@ func run() error {
 	r.HandleFunc("/api/v1/flights/{UUID}", adminHandler.EditFlight).Methods("PATCH")
 	r.HandleFunc("/api/v1/reports/flights", adminHandler.GetFlightInfo).Methods("GET")
 	r.HandleFunc("/api/v1/reports/flights-filling",
-		adminHandler.GetInfo).Methods("GET")
+	adminHandler.GetInfo).Methods("GET")
 
 	c := cors.New(cors.Options{
 		AllowedOrigins:   strings.Split(os.Getenv("GATEWAY_ORIGINS"), " "),

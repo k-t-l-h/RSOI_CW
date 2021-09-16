@@ -219,7 +219,7 @@ async function addFlightBlock() {
 
 function ShowBuyButton() {
     let token = localStorage.getItem("token");
-    if (token !== null || token != "") {
+    if (token !== null || token !== "") {
         return true;
     }
     return false;

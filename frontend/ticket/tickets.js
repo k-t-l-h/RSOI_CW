@@ -99,9 +99,9 @@ async function GetMyTickets(id) {
 
             //link.addEventListener('onclick', ShowAirport.bind(airports.all[i].id), false);
             id = document.createElement('p');
-            id.innerText = tickets[i].ticket_uuid;
+            id.innerText = 'ID билета: ' + tickets[i].ticket_uuid;
             namef = document.createElement('p');
-            namef.innerText = tickets[i].flight_uuid;
+            namef.innerText = 'ID рейса: ' + tickets[i].flight_uuid;
 
             link = document.createElement('div');
             link.innerText = 'Return';

@@ -4,13 +4,11 @@ import (
 	"RSOI_CW/internal/models"
 	"RSOI_CW/internal/pkg/auth"
 	"RSOI_CW/internal/pkg/middleware"
-	"encoding/json"
-	"fmt"
 	"github.com/dgrijalva/jwt-go"
 	"github.com/mailru/easyjson"
-	"log"
 	"net/http"
 	"os"
+	"strings"
 	"time"
 )
 
@@ -83,77 +81,29 @@ func (h *AuthHandler) GetToken(w http.ResponseWriter, r *http.Request) {
 }
 
 func (h *AuthHandler) CheckToken(w http.ResponseWriter, r *http.Request) {
-
-	var cookie models.TokenResponse
-	err := json.NewDecoder(r.Body).Decode(&cookie)
-	if err != nil {
+	var empty models.Token
+	user := middleware.User(r)
+	if user == empty {
 		middleware.Response(w, models.StatusNoAuth, nil)
 		return
 	}
-	cookieValue := cookie.Token
+	middleware.Response(w, models.StatusOkey, nil)
 
-	token, err := jwt.ParseWithClaims(cookieValue,
-		&models.Token{}, func(token *jwt.Token) (interface{}, error) {
-			if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
-				return nil, fmt.Errorf("unexpected signing method")
-			}
-			SecretKey, _ := os.LookupEnv("SECRET")
-			return []byte(SecretKey), nil
-		})
-
-	log.Print(err)
-	if err != nil {
-		middleware.Response(w, models.StatusNoAuth, nil)
-		return
-	}
-
-	if ok := token.Valid; !ok {
-		middleware.Response(w, models.StatusNoAuth, nil)
-		return
-	}
-
-	tk := token.Claims.(*models.Token)
-	if tk.ExpiresAt >= time.Now().Unix() {
-		middleware.Response(w, models.StatusOkey, nil)
-	} else {
-		middleware.Response(w, models.StatusNoAuth, nil)
-	}
 }
 
 func (h *AuthHandler) CheckAdminToken(w http.ResponseWriter, r *http.Request) {
 
-	var cookie models.TokenResponse
-	err := json.NewDecoder(r.Body).Decode(&cookie)
-	if err != nil {
-		middleware.Response(w, models.StatusNoAuth, nil)
-		return
-	}
-	cookieValue := cookie.Token
-
-	token, err := jwt.ParseWithClaims(cookieValue,
-		&models.Token{}, func(token *jwt.Token) (interface{}, error) {
-			if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
-				return nil, fmt.Errorf("unexpected signing method")
-			}
-			SecretKey, _ := os.LookupEnv("SECRET")
-			return []byte(SecretKey), nil
-		})
-
-	if err != nil {
+	var empty models.Token
+	user := middleware.User(r)
+	if user == empty {
 		middleware.Response(w, models.StatusNoAuth, nil)
 		return
 	}
 
-	if ok := token.Valid; !ok {
+	if strings.ToLower(user.UserRole) != "admin" {
 		middleware.Response(w, models.StatusNoAuth, nil)
 		return
 	}
-
-	tk := token.Claims.(*models.Token)
-	if tk.ExpiresAt >= time.Now().Unix() && tk.UserRole == "admin" {
-		middleware.Response(w, models.StatusOkey, nil)
-	} else {
-		middleware.Response(w, models.StatusNoAuth, nil)
-	}
+	middleware.Response(w, models.StatusOkey, nil)
 
 }

@@ -5,6 +5,7 @@ import (
 	"RSOI_CW/internal/pkg/middleware"
 	"encoding/json"
 	"fmt"
+	"github.com/gorilla/mux"
 	"github.com/mailru/easyjson"
 	"github.com/streadway/amqp"
 	"net/http"
@@ -53,7 +54,6 @@ func (h *UserHandler) IsAuthed(r *http.Request) bool {
 		return false
 	}
 	req.Header.Set("Authorization", r.Header.Get("Authorization"))
-	req.Header.Set("Cookie", r.Header.Get("Cookie"))
 
 	client := http.DefaultClient
 	resp, err := client.Do(req)
@@ -115,7 +115,9 @@ func (h *UserHandler) DeleteTicket(w http.ResponseWriter, r *http.Request) {
 		panic("no address")
 	}
 
-	req, err := http.NewRequest(http.MethodDelete, fmt.Sprintf("%s/api/v1/tickets", addr), nil)
+	vars := mux.Vars(r)
+	uuids, _ := vars["UUID"]
+	req, err := http.NewRequest(http.MethodDelete, fmt.Sprintf("%s/api/v1/tickets/%s", addr, uuids), nil)
 	if err != nil || req == nil {
 		middleware.Response(w, models.StatusError, nil)
 		return

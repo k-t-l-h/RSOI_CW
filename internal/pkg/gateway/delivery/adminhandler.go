@@ -19,7 +19,7 @@ func NewAdminHandler() *AdminHandler {
 
 func (h *AdminHandler) IsAdminAuthed(r *http.Request) bool {
 
-	cookie := r.Header.Get("Cookie")
+	cookie := r.Header.Get("Authorization")
 	if cookie == "" {
 		return false
 	}
@@ -36,7 +36,7 @@ func (h *AdminHandler) IsAdminAuthed(r *http.Request) bool {
 		log.Print(err)
 		return false
 	}
-	req.Header.Set("Cookie", r.Header.Get("Cookie"))
+	req.Header.Set("Authorization", r.Header.Get("Authorization"))
 
 	client := http.DefaultClient
 	resp, err := client.Do(req)
