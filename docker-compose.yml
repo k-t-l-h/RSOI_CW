@@ -35,7 +35,7 @@ services:
     image: ktlh/auth
     deploy:
       mode: replicated
-      replicas: 2
+      replicas: 1
       restart_policy:
         condition: on-failure
         delay: 5s
@@ -56,7 +56,7 @@ services:
     image: ktlh/airport
     deploy:
       mode: replicated
-      replicas: 2
+      replicas: 1
       restart_policy:
         condition: on-failure
         delay: 5s
@@ -76,7 +76,7 @@ services:
     image: ktlh/bonus
     deploy:
       mode: replicated
-      replicas: 2
+      replicas: 1
       restart_policy:
         condition: on-failure
         delay: 5s
@@ -96,7 +96,7 @@ services:
     image: ktlh/flight
     deploy:
       mode: replicated
-      replicas: 2
+      replicas: 1
       restart_policy:
         condition: on-failure
         delay: 5s
@@ -116,7 +116,7 @@ services:
     image: ktlh/gateway
     deploy:
       mode: replicated
-      replicas: 2
+      replicas: 1
       restart_policy:
         condition: on-failure
         delay: 5s
@@ -136,7 +136,7 @@ services:
     image: ktlh/reports
     deploy:
       mode: replicated
-      replicas: 2
+      replicas: 1
       restart_policy:
         condition: on-failure
         delay: 5s
@@ -156,7 +156,7 @@ services:
     image: ktlh/tickets
     deploy:
       mode: replicated
-      replicas: 2
+      replicas: 1
       restart_policy:
         condition: on-failure
         delay: 5s
