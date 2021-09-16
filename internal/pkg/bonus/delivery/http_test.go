@@ -40,7 +40,7 @@ func TestGetBonus(t *testing.T) {
 	handler := NewBonusHandler(mock)
 
 	mock.EXPECT().GetBonus(id).Return(0, models.StatusOkey).Times(1)
-	r := httptest.NewRequest("GET", "/airports/{UUID}", strings.NewReader(fmt.Sprint()))
+	r := httptest.NewRequest("GET", "/api/v1/miles", strings.NewReader(fmt.Sprint()))
 	r = mux.SetURLVars(r, map[string]string{
 		"UUID": id.String(),
 	})
@@ -74,7 +74,7 @@ func TestSetBonus(t *testing.T) {
 	handler := NewBonusHandler(mock)
 
 	mock.EXPECT().SetBonus(id, 1).Return(1, models.StatusOkey).Times(1)
-	r := httptest.NewRequest("GET", "/airports/{UUID}", strings.NewReader(fmt.Sprint()))
+	r := httptest.NewRequest("GET", "/api/v1/miles", strings.NewReader(fmt.Sprint()))
 	r = mux.SetURLVars(r, map[string]string{
 		"UUID": id.String(),
 	})
