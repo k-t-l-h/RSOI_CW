@@ -45,16 +45,20 @@ CREATE TABLE public.flight
 
 INSERT INTO public.flight(
     "From", "From_city", "To", "To_city", "Date", "FlightID")
-VALUES ('28d63850-aada-43cc-8720-15f5269e8088', 'Home', '18d63850-aada-43cc-8720-15f5269e8088', 'Not Home', current_date, '5259ae69-ae0e-4dde-a6ed-033027fae15a');
+VALUES ('28d63850-aada-43cc-8720-15f5269e8088', 'Home',
+        '18d63850-aada-43cc-8720-15f5269e8088', 'Not Home', current_date, '5259ae69-ae0e-4dde-a6ed-033027fae15a');
 
 CREATE TABLE public.reports
 (
-    "ID" bigint NOT NULL DEFAULT nextval('"reports_ID_seq"'::regclass),
+    "ID" SERIAL NOT NULL,
     "UserUUID" uuid NOT NULL,
     "FlightUUID" uuid NOT NULL,
     "TicketUUID" uuid NOT NULL,
     CONSTRAINT reports_pkey PRIMARY KEY ("ID")
 );
+
+INSERT INTO public.reports( "UserUUID", "FlightUUID", "TicketUUID")
+VALUES ('f933e898-3a35-48bf-9be4-a92b94dfdf38', 'f933e898-3a35-48bf-9be4-a92b94dfdf38', 'f933e898-3a35-48bf-9be4-a92b94dfdf38');
 
 CREATE TABLE public.ticket
 (
