@@ -169,3 +169,30 @@ body {
     text-align: center;
     margin-top: 20px;
 }
+
+#hideMe {
+    display: inline-block;
+    min-width: 300px;
+    max-width: 45%;
+    border-radius: 50px;
+    background: #574d50;
+    box-shadow:  8px 8px 5px #858182,
+    -8px -8px 5px #423e3e;
+    margin-top: 20px;
+    margin-left:20px;
+    margin-right: 20px;
+    padding: 30px;
+
+    -webkit-animation: cssAnimation 5s forwards;
+    animation: cssAnimation 5s forwards;
+}
+@keyframes cssAnimation {
+    0%   {opacity: 1;}
+    90%  {opacity: 1;}
+    100% {opacity: 0;}
+}
+@-webkit-keyframes cssAnimation {
+    0%   {opacity: 1;}
+    90%  {opacity: 1;}
+    100% {opacity: 0;}
+}

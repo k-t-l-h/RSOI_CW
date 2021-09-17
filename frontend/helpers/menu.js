@@ -82,7 +82,7 @@ function addError(text) {
     if (err === undefined || err === null) {
         d = document.createElement('div');
         d.innerText = text;
-        d.setAttribute("id", "error");
+        d.setAttribute("id", "hideMe");
         main = document.getElementById('container');
         main.prepend(d);
     } else {
