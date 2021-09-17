@@ -3,12 +3,9 @@ version: "3.3"
 services:
   frontend:
     hostname: frontend
-    build:
-      context: .
-      dockerfile: ./build/frontend.Dockerfile
     ports:
       - "8887:8887"
-    image: ktlh/frontend
+    image: ktlh/frontend:latest
   rabbit:
     restart: on-failure
     image: rabbitmq
@@ -16,18 +13,11 @@ services:
     ports:
       - "5672:5672"
   auth:
-    build:
-      context: .
-      dockerfile: ./build/auth.Dockerfile
-      labels:
-        kompose.service.type: LoadBalancer
-    links:
-      - database
     expose:
       - "8010"
     ports:
       - "8010:8010"
-    image: ktlh/auth
+    image: ktlh/auth:latest
     deploy:
       mode: replicated
       replicas: 1
@@ -37,18 +27,11 @@ services:
         window: 30s
   airport:
     restart: on-failure
-    build:
-      context: .
-      dockerfile: ./build/airport.Dockerfile
-      labels:
-        kompose.service.type: LoadBalancer
-    links:
-      - database
     expose:
       - "8020"
     ports:
       - "8020:8020"
-    image: ktlh/airport
+    image: ktlh/airport:latest
     deploy:
       mode: replicated
       replicas: 1
@@ -57,18 +40,11 @@ services:
         delay: 5s
         window: 30s
   bonus:
-    build:
-      context: .
-      dockerfile: ./build/bonus.Dockerfile
-      labels:
-        kompose.service.type: LoadBalancer
-    links:
-      - database
     expose:
       - "8050"
     ports:
       - "8050:8050"
-    image: ktlh/bonus
+    image: ktlh/bonus:latest
     deploy:
       mode: replicated
       replicas: 1
@@ -77,18 +53,11 @@ services:
         delay: 5s
         window: 30s
   flight:
-    build:
-      context: .
-      dockerfile: ./build/flights.Dockerfile
-      labels:
-        kompose.service.type: LoadBalancer
-    links:
-      - database
     expose:
       - "8030"
     ports:
       - "8030:8030"
-    image: ktlh/flight
+    image: ktlh/flight:latest
     deploy:
       mode: replicated
       replicas: 1
@@ -97,18 +66,11 @@ services:
         delay: 5s
         window: 30s
   gateway:
-    build:
-      context: .
-      dockerfile: ./build/gateway.Dockerfile
-      labels:
-        kompose.service.type: LoadBalancer
-    links:
-      - database
     expose:
       - "8000"
     ports:
       - "8000:8000"
-    image: ktlh/gateway
+    image: ktlh/gateway:latest
     deploy:
       mode: replicated
       replicas: 1
@@ -117,18 +79,11 @@ services:
         delay: 5s
         window: 30s
   reports:
-    build:
-      context: .
-      dockerfile: ./build/reports.Dockerfile
-      labels:
-        kompose.service.type: LoadBalancer
-    links:
-      - database
     expose:
       - "8060"
     ports:
       - "8060:8060"
-    image: ktlh/reports
+    image: ktlh/reports:latest
     deploy:
       mode: replicated
       replicas: 1
@@ -137,18 +92,11 @@ services:
         delay: 5s
         window: 30s
   tickets:
-    build:
-      context: .
-      dockerfile: ./build/tickets.Dockerfile
-      labels:
-        kompose.service.type: LoadBalancer
-    links:
-      - database
     expose:
       - "8040"
     ports:
       - "8040:8040"
-    image: ktlh/tickets
+    image: ktlh/tickets:latest
     deploy:
       mode: replicated
       replicas: 1

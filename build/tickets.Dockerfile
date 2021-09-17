@@ -1,19 +1,42 @@
-FROM golang:latest as builder
-ENV TZ=Europe/Moscow
-RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+FROM golang:1.14 AS builder
 
 ENV GO111MODULE=on
 
-WORKDIR /app
-
-COPY go.mod .
-COPY go.sum .
-RUN go mod tidy
-
-COPY .env .
+WORKDIR /opt/app
 COPY . .
-RUN  go test internal/...
-RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o auth cmd/tickets/main.go
+RUN go build cmd/tickets/main.go
 
-EXPOSE 8040
-CMD sleep 15 && ./auth
+FROM ubuntu:latest
+
+RUN apt-get -y update && apt-get install -y tzdata
+
+ENV dbData "postgres://docker:docker@127.0.0.1:5432/docker?pool_max_conns=10"
+
+ENV TZ=Russina/Moscow
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+
+ENV PostgresVer 12
+ENV PostgresPort 5432
+
+RUN apt-get -y update && apt-get install -y postgresql-$PostgresVer
+
+USER postgres
+
+RUN service postgresql start &&\
+psql --command "CREATE USER docker WITH SUPERUSER PASSWORD 'docker';" &&\
+createdb -O docker docker &&\
+service postgresql stop
+
+EXPOSE $PostgresPort
+
+USER root
+
+WORKDIR /usr/src/app
+
+COPY . .
+COPY --from=builder /opt/app/main .
+
+EXPOSE 5000
+ENV PGPASSWORD docker
+
+CMD service postgresql start && psql -h localhost -d docker -U docker -p $PostgresPort -a -q -f ./build/scripts.sql && ./main
