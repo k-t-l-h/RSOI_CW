@@ -1,6 +1,6 @@
 window.onload = addMenu;
 
-const defaultAddr = "http://3.67.182.3"//"http://3.67.182.34";
+const defaultAddr = "http://3.67.182.34"//"http://3.67.182.34";
 const defaultOrigin = "http://3.67.182.34:8887" //"http://3.67.182.34:8887"; //
 const buttons = ["Рейсы", "Аэропорты"];
 const functions = ["ShowAllFlights()", "ShowAllAirports()"];
