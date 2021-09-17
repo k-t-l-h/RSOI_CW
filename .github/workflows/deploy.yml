@@ -17,7 +17,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: test
-          path: ./build/docker-compose.yml
+          path: ./docker-compose.yml
       - name: Download env
         uses: actions/download-artifact@v1
         with:
